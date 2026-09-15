@@ -1,0 +1,71 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  @if (order()) {
+    <div class="order-details">
+      <h2>Order Details</h2>
+
+      <div class="card-box">
+        <p><strong>Order ID:</strong> {{ order()?.orderId }}</p>
+
+        <p>
+          <strong>Placed On:</strong>
+          {{ order()?.createdAt | date: 'medium' }}
+        </p>
+
+        <p>
+          <strong>Total:</strong>
+          ₹ {{ order()?.total | number: '1.0-0' }}.00
+        </p>
+
+        <p>
+          <strong>Status:</strong>
+          {{ order()?.status | titlecase }}
+        </p>
+
+        <p>
+          <strong>User:</strong>
+          {{ order()?.userEmail }}
+        </p>
+
+        <h3>Products</h3>
+
+        @if ((order()?.items?.length ?? 0) > 0) {
+          @for (item of order()?.items ?? []; track item.productId ?? $index) {
+            <div class="order-product">
+              <img [src]="item.image" alt="product" />
+
+              <div>
+                <h4>{{ item.title }}</h4>
+                <p>Qty: {{ item.quantity }}</p>
+                <!-- <p>₹ {{ item.price * item.quantity | number: '1.0-0' }}.00</p> -->
+                <div class="price-box">
+                  <div>
+                    @if (item.discount && item.discount > 0) {
+                      <span class="discount"> -{{ item.discount }}% </span>
+                    }
+
+                    <span class="final-price">
+                      ₹{{ getDiscountPrice(item) | number: '1.0-0' }}.00
+                    </span>
+                  </div>
+
+                  <p class="original-price-mrp">
+                    M.R.P.:
+                    <span class="original-price"> ₹{{ item.price | number: '1.0-0' }}.00 </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        } @else {
+          <p>No products found</p>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="card-box">
+      <p>Order not found</p>
+    </div>
+  }
+}

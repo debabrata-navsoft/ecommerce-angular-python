@@ -1,0 +1,20 @@
+<div class="order-success">
+  <div class="success-container">
+    <h1>🎉 Order Placed Successfully!</h1>
+
+    <p>Your order has been confirmed.</p>
+
+    @if (order(); as item) {
+      <div class="order-box">
+        <h3>Order Details</h3>
+
+        <p><strong>Order ID:</strong> {{ item.orderId }}</p>
+        <p><strong>Date:</strong> {{ item.createdAt | date: 'medium' }}</p>
+        <p><strong>Total:</strong> ₹{{ item.total | number: '1.0-0' }}.00</p>
+        <p><strong>Status:</strong> {{ item.status }}</p>
+      </div>
+    }
+
+    <button (click)="goHome()">⬅ Go Back to Home</button>
+  </div>
+</div>

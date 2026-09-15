@@ -1,0 +1,47 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-box">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="Email"
+          formControlName="email"
+        />
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+
+      <button type="submit" class="admin-login-btn">
+        @if (isLoading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        } @else {
+          Login
+        }
+      </button>
+
+      <!-- <button [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button> -->
+    </form>
+
+    <!-- @if (errorMsg) {
+      <p class="error">
+        {{ errorMsg }}
+      </p>
+    } -->
+  </div>
+</div>

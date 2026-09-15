@@ -1,0 +1,222 @@
+.orders {
+  padding: 1rem 2rem;
+}
+
+.orders h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+/* .orders th {
+  text-align: left;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600; */
+/* text-align: left;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 1px solid #e0e0e0; */
+/* } */
+
+.orders td {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.orders tbody tr:hover {
+  background: #eee;
+}
+
+.orders td:nth-child(4) {
+  font-weight: 600;
+}
+
+/* .status-pending {
+  color: #ff9800;
+}
+
+.status-shipped {
+  color: #2196f3;
+}
+
+.status-delivered {
+  color: #4caf50;
+} */
+
+.orders {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .orders table {
+    font-size: 12px;
+  }
+
+  .orders th,
+  .orders td {
+    padding: 10px;
+  }
+}
+
+.orders {
+  padding: 1rem 2rem;
+}
+
+.orders h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 600px;
+}
+
+.orders thead {
+  background: #111827;
+  color: #fff;
+}
+
+.table-wrapper th {
+  text-align: left;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.orders td {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.orders tbody tr:hover {
+  background: #eee;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 80px;
+  text-align: center;
+}
+
+.status {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* .status.pending {
+  color: #ff9800;
+}
+
+.status.shipped {
+  color: #2196f3;
+}
+
+.status.delivered {
+  color: #4caf50;
+} */
+
+@media (max-width: 768px) {
+  .orders {
+    padding: 1rem;
+  }
+
+  .orders th,
+  .orders td {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+.status-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.status-section select {
+  padding: 4px;
+}
+
+.status.pending {
+  color: orange;
+}
+/* .status.confirmed {
+  color: blue;
+} */
+.status.shipped {
+  color: purple;
+}
+.status.delivered {
+  color: green;
+}
+
+.status.cancelled {
+  color: red;
+}
+
+select {
+  margin-top: 5px;
+}
+
+.id-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.id-arrow mat-icon {
+  font-size: 16px;
+  vertical-align: middle;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+
+button {
+  border: none;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* View button */
+button {
+  background: #2563eb;
+  color: white;
+}
+
+button:hover {
+  background: #1d4ed8;
+}

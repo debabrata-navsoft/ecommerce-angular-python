@@ -1,0 +1,361 @@
+.add-product-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.grid-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 48%;
+}
+
+label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #3f51b5;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.4);
+  /* border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08); */
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* CREATE (Add Product) → Green */
+.create-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 13px 28px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.create-btn:hover {
+  background-color: #218838;
+}
+
+/* UPDATE → Blue */
+.update-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 13px 28px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.update-btn:hover {
+  background-color: #0056b3;
+}
+
+/* CANCEL → Red */
+.cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 13px 28px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cancel-btn:hover {
+  background-color: #b02a37;
+}
+
+/* .btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  padding: 13px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.btn {
+  display: flex;
+  gap: 10px;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #999;
+}
+
+button:hover {
+  background: #1f2937;
+} */
+
+small {
+  color: red;
+  font-size: 13px;
+}
+
+/* button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+} */
+
+/* .add-product-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+input[type='file'] {
+  padding: 10px;
+  cursor: pointer;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+button {
+  grid-column: span 2;
+  justify-self: start;
+  padding: 13px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: #1f2937;
+} */
+
+/* .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #111827;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button {
+  width: fit-content;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  background: #111827;
+  color: white;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+} */
+
+.dynamic-field {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.dynamic-field input {
+  flex: 1;
+}
+
+/* .dynamic-field button { */
+/* background: red; */
+/* color: #f03e3e;
+  padding: 8px 10px;
+  border: none; */
+/* border-radius: 6px; */
+/* } */
+
+.add-fields {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1971c2;
+  background: white;
+  border: 1px solid #ced4da;
+}
+
+.add-fields:hover {
+  background: #eee;
+}
+
+.deleteField {
+  cursor: pointer;
+  background: white;
+  color: #fd2323;
+  padding: 8px 10px;
+  border: none;
+}
+
+.deleteField:hover {
+  color: #cf1b1b;
+}
+
+/* Add field button */
+/* .form-group.full-width > button {
+  margin-top: 10px;
+  background: #28a745;
+  color: #fff;
+} */

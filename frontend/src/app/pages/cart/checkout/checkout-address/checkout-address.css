@@ -1,0 +1,268 @@
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.address-card {
+  flex: 1;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  background: white;
+  /* display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  background: #fff; */
+}
+
+.address-card:hover {
+  border-color: #ff7a00;
+  background: #fffaf5;
+}
+
+.address-card:has(input:checked) {
+  border: 2px solid #ff7a00;
+  background: #fffaf5;
+}
+
+/* .address-card input {
+  margin-top: 4px;
+  accent-color: #ff7a00;
+  transform: scale(1.2);
+} */
+
+.address-details {
+  flex: 1;
+}
+
+.address-details h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.address-details p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+}
+
+.address-details .phone {
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+} */
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  /* padding: 80px 16px 24px; */
+
+  box-sizing: border-box;
+}
+
+.popup-box {
+  margin-top: 0;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 104px);
+  overflow-y: auto;
+}
+
+/* .popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+} */
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.popup-header h3 {
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  /* margin-bottom: 2rem; */
+}
+
+.popup-header button {
+  cursor: pointer;
+  border: 0;
+  background: white;
+  color: #000;
+  border: 1px solid transparent;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-header button:hover {
+  border: 1px solid #000;
+}
+
+.popup-box input {
+  max-width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  /* margin-bottom: 1rem; */
+}
+
+.input-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.popup-btn button {
+  padding: 12px 18px;
+  /* width: 100%; */
+  margin-bottom: 8px;
+}
+
+.popup-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #212529;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* .actions {
+  display: flex;
+  justify-content: space-between;
+} */
+
+.edit-btn {
+  margin-top: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #1971c2;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  color: #1066b7;
+  text-decoration: underline;
+}
+
+.toggle-btn {
+  margin-top: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #e67700;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  color: #d36f04;
+  text-decoration: underline;
+}
+
+.see-more-add-new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* gap: 1rem; */
+}
+
+.add-new {
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1971c2;
+  background: white;
+  border: 1px solid #ced4da;
+  margin-top: 1rem;
+}
+
+.add-new:hover {
+  background: #eee;
+}
+
+.select-worning {
+  color: red;
+  font-size: 13px;
+  margin-top: 6px;
+  margin-bottom: 0;
+}

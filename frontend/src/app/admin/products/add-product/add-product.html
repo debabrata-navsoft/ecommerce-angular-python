@@ -1,0 +1,217 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="add-product-container">
+    <h2>{{ isEdit() ? 'Update Product' : 'Add Product' }}</h2>
+
+    <form (ngSubmit)="onSubmit()" class="grid-form">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          name="title"
+          placeholder="Enter title"
+          [ngModel]="product().title"
+          (ngModelChange)="updateField('title', $event)"
+          (blur)="markTouched('title')"
+        />
+        @if (isInvalid('title')) {
+          <small>Title is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          placeholder="Enter price"
+          [ngModel]="product().price"
+          (ngModelChange)="updateField('price', +$event)"
+          (blur)="markTouched('price')"
+        />
+        @if (isInvalid('price')) {
+          <small>Price is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="discount">Discount (%)</label>
+        <input
+          id="discount"
+          name="discount"
+          type="number"
+          placeholder="Enter discount"
+          [ngModel]="product().discount"
+          (ngModelChange)="updateField('discount', +$event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input
+          id="stock"
+          name="stock"
+          type="number"
+          placeholder="Enter stock"
+          [ngModel]="product().stock"
+          (ngModelChange)="updateField('stock', +$event)"
+          (blur)="markTouched('stock')"
+        />
+        @if (isInvalid('stock')) {
+          <small>Stock is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="brand">Brand</label>
+        <input
+          id="brand"
+          name="brand"
+          placeholder="Enter brand"
+          [ngModel]="product().brand"
+          (ngModelChange)="updateField('brand', $event)"
+          (blur)="markTouched('brand')"
+        />
+        @if (isInvalid('brand')) {
+          <small>Brand is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input
+          id="color"
+          name="color"
+          placeholder="Enter color"
+          [ngModel]="product().color"
+          (ngModelChange)="updateField('color', $event)"
+          (blur)="markTouched('color')"
+        />
+        @if (isInvalid('color')) {
+          <small>Color is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input
+          id="category"
+          name="category"
+          placeholder="Enter category"
+          [ngModel]="product().category"
+          (ngModelChange)="updateField('category', $event)"
+          (blur)="markTouched('category')"
+        />
+        @if (isInvalid('category')) {
+          <small>Category is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="subCategory">Sub Category</label>
+        <input
+          id="subCategory"
+          name="subCategory"
+          placeholder="Enter Sub Category"
+          [ngModel]="product().subCategory"
+          (ngModelChange)="updateField('subCategory', $event)"
+          (blur)="markTouched('subCategory')"
+        />
+        @if (isInvalid('subCategory')) {
+          <small>Sub Category is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="image">Product Image</label>
+        <input
+          id="image"
+          name="image"
+          placeholder="Paste image URL"
+          [ngModel]="product().image"
+          (ngModelChange)="updateField('image', $event)"
+          (blur)="markTouched('image')"
+        />
+        @if (isInvalid('image')) {
+          <small>Image URL is required</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating</label>
+        <input
+          id="rating"
+          name="rating"
+          type="number"
+          min="0"
+          max="5"
+          step="0.1"
+          placeholder="Enter rating"
+          [ngModel]="product().rating"
+          (ngModelChange)="updateField('rating', +$event)"
+        />
+
+        @if (product().rating! > 5 || product().rating! < 0) {
+          <small>Rating must be between 0 and 5</small>
+        }
+      </div>
+
+      <div class="extra-fields full-width">
+        <h3>Extra Product Fields</h3>
+
+        <button class="add-fields" type="button" (click)="addField()">➕ Add New Field</button>
+
+        <!-- *ngFor="let field of extraFields(); let i = index; trackBy: trackByIndex" -->
+        @for (field of extraFields(); track $index; let i = $index) {
+          <div class="dynamic-field">
+            <input
+              [id]="'field-label-' + i"
+              [name]="'field-label-' + i"
+              placeholder="Field Name"
+              [value]="field.label"
+              (input)="updateExtraField(i, 'label', $any($event.target).value)"
+            />
+
+            <input
+              [id]="'field-label-' + i"
+              [name]="'field-label-' + i"
+              placeholder="Field Value"
+              [value]="field.value"
+              (input)="updateExtraField(i, 'value', $any($event.target).value)"
+            />
+
+            <button type="button" (click)="removeField(i)" class="deleteField">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="form-group full-width">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Enter description"
+          [ngModel]="product().description"
+          (ngModelChange)="updateField('description', $event || '')"
+          (blur)="markTouched('description')"
+          name="description"
+        ></textarea>
+        @if (isInvalid('description')) {
+          <small>Description is required</small>
+        }
+      </div>
+
+      <div class="btn">
+        <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+
+        <button type="submit" [ngClass]="isEdit() ? 'update-btn' : 'create-btn'">
+          {{ isEdit() ? 'Update Product' : 'Add Product' }}
+        </button>
+      </div>
+    </form>
+  </div>
+}

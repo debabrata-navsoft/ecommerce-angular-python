@@ -1,0 +1,150 @@
+.wishlist-title {
+  font-size: 28px;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.wishlist-container {
+  gap: 2rem;
+  padding: 2rem;
+  margin: 1rem 0;
+  background: #f8f9fa;
+}
+
+.wishlist-container-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 2rem;
+  padding: 2rem;
+  /* margin: 1rem 0; */
+  background: #f8f9fa;
+}
+
+.wishlist-card {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 4rem;
+  padding: 1.5rem;
+  /* border-bottom: 1px solid #ddd; */
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.img-box img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.details {
+  flex: 1;
+}
+
+.details h3 {
+  font-size: 16px;
+  margin: 0 0 5px;
+  font-weight: 500;
+}
+
+.rating {
+  color: #f5a623;
+  margin-bottom: 5px;
+}
+
+.category {
+  color: #555;
+  margin: 0 0 5px 0;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 120px;
+  max-width: 200px;
+}
+
+.cart-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #ffd814;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cart-btn:hover {
+  background: #f7ca00;
+}
+
+.remove-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #e53935;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.remove-btn:hover {
+  background: #b71c1c;
+}
+
+.empty-msg {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.5rem;
+  color: #868e96;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+.discount {
+  color: red;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.final-price {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.original-price-mrp {
+  font-size: 13px;
+  margin: 0;
+}
+
+.brand {
+  margin: 0 0 5px 0;
+  color: #555;
+}
+
+.wishlist-card-details {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  gap: 1rem;
+}

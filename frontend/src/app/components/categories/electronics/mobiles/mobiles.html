@@ -1,0 +1,74 @@
+<div class="slider-wrapper">
+  <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
+    <mat-icon class="material-icons-outlined">chevron_left</mat-icon>
+  </button>
+
+  <div class="slider-viewport">
+    <div
+      class="slider-track"
+      [style.transform]="'translateX(-' + (currentIndex() / pageSize()) * 100 + '%)'"
+    >
+      @for (product of fullProducts(); track product.id) {
+        <div class="product-card">
+          <img [src]="product.image" (click)="viewDetails(product.id)" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <button
+    class="nav next"
+    (click)="next()"
+    [disabled]="currentIndex() + pageSize() >= fullProducts().length"
+  >
+    <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+  </button>
+</div>
+
+<!-- <div class="slider-wrapper">
+  <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <div class="slider-viewport">
+    <div
+      class="slider-track"
+      [style.transform]="'translateX(-' + currentIndex() * (100 / pageSize) + '%)'"
+    >
+      @for (product of limitedProducts(); track product.id) {
+        <div class="product-card">
+          <img [src]="product.image" (click)="viewDetails(product.id)" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <button
+    class="nav next"
+    (click)="next()"
+    [disabled]="currentIndex() + pageSize >= limitedProducts().length"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div> -->
+
+<!-- <div class="slider-wrapper">
+
+  <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+
+  <div class="slider-row">
+    @for (product of visibleProducts(); track product.id) {
+      <div class="product-card" (click)="viewDetails(product.id)">
+        <img [src]="product.image" alt="product" />
+      </div>
+    }
+  </div>
+
+
+  <button class="nav next" (click)="next()" [disabled]="currentIndex() + pageSize >= totalLimit">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div> -->

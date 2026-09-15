@@ -1,0 +1,26 @@
+<div class="slider-wrapper">
+  <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
+    <mat-icon class="material-icons-outlined">chevron_left</mat-icon>
+  </button>
+
+  <div class="slider-viewport">
+    <div
+      class="slider-track"
+      [style.transform]="'translateX(-' + (currentIndex() / pageSize()) * 100 + '%)'"
+    >
+      @for (product of fullProducts(); track product.id) {
+        <div class="product-card">
+          <img [src]="product.image" (click)="viewDetails(product.id!)" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <button
+    class="nav next"
+    (click)="next()"
+    [disabled]="currentIndex() + pageSize() >= fullProducts().length"
+  >
+    <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+  </button>
+</div>

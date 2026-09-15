@@ -1,0 +1,100 @@
+<header class="top-header">
+  <div class="header-top">
+    <div class="logo">
+      <a routerLink="/"><span>SnapCart</span></a>
+      <small>BIG MEGA STORE</small>
+    </div>
+
+    <div class="search-box">
+      <input
+        id="searchProduct"
+        name="searchProduct"
+        type="text"
+        placeholder="Search product..."
+        autocomplete="off"
+        aria-label="Search products"
+        [(ngModel)]="searchTerm"
+        (input)="onInputChange()"
+        (keydown)="onKeyDown($event)"
+      />
+
+      <button (click)="searchProduct()">
+        <mat-icon class="material-icons-outlined">search</mat-icon>
+      </button>
+
+      @if (suggestions().length > 0) {
+        <div class="search-dropdown">
+          @for (item of suggestions(); track item.id; let i = $index) {
+            <div
+              class="dropdown-item"
+              (click)="selectProduct(item)"
+              [class.active]="i === activeIndex()"
+            >
+              {{ item.searchName || (item.title | slice: 0 : 40) + '...' }}
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="header-icons">
+      <div class="login-section">
+        @if (authReady) {
+          @if (!isLoggedIn) {
+            <a routerLink="/login" class="btn secondary">Login</a>
+          } @else {
+            <div class="avatar-container">
+              <img (click)="toggleMenu($event)" src="/avatar.png" alt="" class="avatar-img" />
+
+              @if (showMenu()) {
+                <div class="overlay" (click)="closeMenu()"></div>
+                <div class="dropdown">
+                  <button (click)="viewProfile()">
+                    <mat-icon class="material-icons-outlined person">person_outline</mat-icon>My
+                    Account
+                  </button>
+                  <button (click)="logout()">
+                    <mat-icon class="material-icons-outlined logout">logout</mat-icon>Logout
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+
+      <div class="icons">
+        <a routerLink="/wishlist" class="fav-icon">
+          <mat-icon class="material-icons-outlined">favorite_border</mat-icon>
+
+          @if (isLoggedIn) {
+            <span class="fav-badge">
+              {{ wishlistCount() }}
+            </span>
+          }
+          <!-- <span class="cart-badge">
+            {{ isLoggedIn ? wishlistCount() : 0 }}
+          </span> -->
+        </a>
+
+        <a routerLink="/cart" class="cart-icon">
+          <mat-icon class="material-icons-outlined">shopping_cart</mat-icon>
+
+          @if (isLoggedIn) {
+            <span class="cart-badge">
+              {{ itemCount() }}
+            </span>
+          }
+          <!-- <span class="cart-badge">
+            {{ isLoggedIn ? itemCount() : 0 }}
+          </span> -->
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <app-navbar />
+  @if (!hideBreadcrumb()) {
+    <app-breadcrumb />
+  }
+</header>

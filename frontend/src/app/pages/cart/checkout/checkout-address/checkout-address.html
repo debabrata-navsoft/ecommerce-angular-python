@@ -1,0 +1,171 @@
+@if (userData()?.addresses?.length) {
+  <div class="address-list">
+    @for (item of visibleAddresses(); track item.index) {
+      <label
+        class="address-card"
+        [class.selected]="selectedIndex() === item.index"
+        (click)="selectAddress(item.addr, item.index)"
+      >
+        <input
+          type="radio"
+          name="selectedAddress"
+          [value]="item.index"
+          [checked]="selectedIndex() === item.index"
+        />
+
+        <div class="address-details">
+          <h4>{{ item.addr.fullName }}</h4>
+          <p>
+            {{ item.addr.address }}, {{ item.addr.city }}, {{ item.addr.state }} -
+            {{ item.addr.pinCode }}
+          </p>
+          <p>Landmark: {{ item.addr.landmark }}</p>
+          <small>Phone number: {{ item.addr.phone }}</small>
+        </div>
+
+        <div (click)="$event.stopPropagation()">
+          <button
+            type="button"
+            (click)="$event.stopPropagation(); editAddress(item.addr, item.index)"
+            class="edit-btn"
+          >
+            Edit address
+          </button>
+        </div>
+      </label>
+    }
+  </div>
+
+  @if (!selectedAddress()) {
+    <p class="select-worning">Please select a delivery address to continue.</p>
+  }
+} @else {
+  <p>No saved address</p>
+}
+
+<div class="see-more-add-new">
+  @if ((userData()?.addresses?.length || 0) > 2) {
+    <button type="button" class="toggle-btn" (click)="toggleShowAll()">
+      {{ showAll() ? 'Show less addresses' : 'Show more addresses' }}
+    </button>
+  }
+
+  <button type="button" (click)="openPopup()" class="add-new">Add New Address</button>
+</div>
+
+@if (showAddressPopup()) {
+  <div class="popup" (click)="showAddressPopup.set(false)">
+    <div class="popup-box" (click)="$event.stopPropagation()">
+      <div class="popup-header">
+        <h3>{{ editingIndex() !== null ? 'Edit Address' : 'Add New Address' }}</h3>
+
+        <button (click)="showAddressPopup.set(false)">
+          <mat-icon class="material-icons-outlined">close</mat-icon>
+        </button>
+      </div>
+
+      <div class="form-row">
+        <div class="input-box">
+          <label for="fullName">Full Name</label>
+          <input
+            id="fullName"
+            name="fullName"
+            autocomplete="name"
+            [ngModel]="newAddress().fullName"
+            (ngModelChange)="updateField('fullName', $event)"
+            placeholder="Full Name"
+          />
+        </div>
+
+        <div class="input-box">
+          <label for="phone">Phone no.</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            [ngModel]="newAddress().phone"
+            (ngModelChange)="updateField('phone', $event)"
+            placeholder="Phone"
+          />
+        </div>
+      </div>
+
+      <div class="input-box">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          [ngModel]="newAddress().email"
+          (ngModelChange)="updateField('email', $event)"
+          placeholder="Email"
+        />
+
+        <label for="address">Address</label>
+        <input
+          id="address"
+          name="address"
+          autocomplete="street-address"
+          [ngModel]="newAddress().address"
+          (ngModelChange)="updateField('address', $event)"
+          placeholder="Address"
+        />
+
+        <label for="landmark">Landmark</label>
+        <input
+          id="landmark"
+          name="landmark"
+          autocomplete="off"
+          [ngModel]="newAddress().landmark"
+          (ngModelChange)="updateField('landmark', $event)"
+          placeholder="Landmark"
+        />
+
+        <label for="city">City</label>
+        <input
+          id="city"
+          name="city"
+          autocomplete="address-level2"
+          [ngModel]="newAddress().city"
+          (ngModelChange)="updateField('city', $event)"
+          placeholder="City"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="input-box">
+          <label for="state">State</label>
+          <input
+            id="state"
+            name="state"
+            autocomplete="address-level1"
+            [ngModel]="newAddress().state"
+            (ngModelChange)="updateField('state', $event)"
+            placeholder="State"
+          />
+        </div>
+
+        <div class="input-box">
+          <label for="pinCode">PIN Code</label>
+          <input
+            id="pinCode"
+            name="pinCode"
+            type="number"
+            autocomplete="postal-code"
+            [ngModel]="newAddress().pinCode"
+            (ngModelChange)="updateField('pinCode', $event)"
+            placeholder="PIN Code"
+          />
+        </div>
+      </div>
+
+      <div class="popup-btn">
+        <button (click)="saveAddress()">
+          {{ editingIndex() !== null ? 'Update Address' : 'Save Address' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

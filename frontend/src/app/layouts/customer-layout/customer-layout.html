@@ -1,0 +1,13 @@
+<div class="app-wrapper">
+  @if (!hideLayout()) {
+    <app-header [hideBreadcrumb]="hideBreadcrumb()" />
+  }
+
+  <main class="page-container" [class.auth-page]="hideLayout()">
+    <router-outlet></router-outlet>
+  </main>
+
+  @if (!hideLayout()) {
+    <app-footer />
+  }
+</div>

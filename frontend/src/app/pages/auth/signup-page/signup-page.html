@@ -1,0 +1,170 @@
+<div class="signup-wrapper">
+  <div class="signup-card">
+    <h1>Create Account</h1>
+    <p>Signup to create your account</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="name">
+        <div>
+          <label for="firstName">First Name</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              formControlName="firstName"
+            />
+          </div>
+
+          <div class="error">
+            @if (firstName.invalid && firstName.touched) {
+              <p class="error-line">First name is required</p>
+            }
+          </div>
+        </div>
+        <div>
+          <label for="lastName">Last Name</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="error">
+            @if (lastName.invalid && lastName.touched) {
+              <p class="error-line">Last name is required</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="email">
+        <label for="email">Email</label>
+        <div class="input-box">
+          <mat-icon class="material-icons-outlined icon">email</mat-icon>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email"
+            formControlName="email"
+          />
+        </div>
+
+        <div class="error">
+          @if (email.errors?.['required'] && email.touched) {
+            <p class="error-line">Email is required</p>
+          }
+          @if (email.errors?.['email']) {
+            <p class="error-line">Enter valid email</p>
+          }
+          @if (email.errors?.['emailTaken']) {
+            <p class="error-line">Email already exists</p>
+          }
+        </div>
+      </div>
+
+      <div class="password">
+        <div>
+          <label for="password">Password</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              formControlName="password"
+            />
+          </div>
+          <div class="error">
+            @if (password.errors?.['required'] && password.touched) {
+              <p class="error-line">Password required</p>
+            }
+
+            @if (password.errors?.['minlength'] && password.touched) {
+              <p class="error-line">Minimum 6 characters</p>
+            }
+          </div>
+        </div>
+
+        <div>
+          <label for="confirm-password">Confirm Password</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              formControlName="confirmPassword"
+            />
+          </div>
+          <div class="error">
+            <div class="error">
+              @if (confirmPassword.errors?.['required'] && confirmPassword.touched) {
+                <p class="error-line">Confirm password required</p>
+              }
+
+              @if (form.errors?.['passwordMismatch'] && confirmPassword.touched) {
+                <p class="error-line">Passwords do not match</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="phone">Phone Number</label>
+        <div class="phone-header">
+          <div formArrayName="phoneNumber" class="phone">
+            @for (phone of phoneNumber.controls; track $index; let i = $index) {
+              <div class="phone-row">
+                <div class="input-box">
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    [formControlName]="i"
+                    placeholder="Phone number"
+                  />
+                  <button (click)="removePhone(i)" class="remove">
+                    <mat-icon class="material-icons-outlined">delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="phone-btn">
+            <button (click)="addPhone()" type="button" class="add">Add Phone</button>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn submit-button">
+        @if (isLoading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        } @else {
+          Sign Up
+        }
+      </button>
+    </form>
+
+    <div class="login-link">
+      I have an account?
+      <a routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>

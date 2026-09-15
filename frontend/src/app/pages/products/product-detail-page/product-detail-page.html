@@ -1,0 +1,82 @@
+@if (errorMsg()) {
+  <app-error />
+} @else if (product(); as product) {
+  <div class="product-details">
+    <div class="product-details-card">
+      <!-- Left -->
+      <div class="img-section">
+        @if (showWishlistIcon()) {
+          <div class="fav-icon">
+            <button (click)="addToWishlist(product); $event.stopPropagation()">
+              <mat-icon
+                class="material-icons-outlined"
+                [ngClass]="{ 'active-wish': isWishlisted(product.id!) }"
+              >
+                {{ isWishlisted(product.id!) ? 'favorite' : 'favorite_border' }}
+              </mat-icon>
+            </button>
+          </div>
+        }
+
+        <img [src]="product.image" [alt]="product.title" class="product-thumbnail" />
+
+        <div>
+          @if (product.stock > 0) {
+            <div class="button-group">
+              <button (click)="addToCart(product)" class="cart-button">Add to Cart</button>
+
+              <button (click)="buyNow(product)" class="buy-button">Buy Now</button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="info-section">
+        <h2>{{ product.title }}</h2>
+
+        <div class="rating">
+          @for (star of stars(); track $index) {
+            <span [ngClass]="star">&#9733;</span>
+          }
+          <span class="rating-number">({{ product.rating || 0 }})</span>
+        </div>
+
+        <div class="price-stock">
+          <p class="stock" [ngClass]="{ 'out-of-stock': product.stock === 0 }">
+            {{ product.stock > 0 ? product.stock + ' in stock' : 'Out of Stock' }}
+          </p>
+
+          <!-- <p class="price">₹{{ product.price | number: '1.2-2' }}</p> -->
+
+          <div class="price-box">
+            <div>
+              @if (product.discount && product.discount > 0) {
+                <span class="discount"> -{{ product.discount }}% </span>
+              }
+
+              <span class="final-price">
+                ₹{{ getDiscountPrice(product) | number: '1.0-0' }}.00</span
+              >
+            </div>
+
+            <p class="original-price-mrp">
+              M.R.P.: <span class="original-price">₹{{ product.price | number: '1.0-0' }}.00</span>
+            </p>
+          </div>
+        </div>
+
+        <p><strong>Category:</strong> {{ product.subCategory | categoryLabel }}</p>
+        <p><strong>Brand:</strong> {{ product.brand }}</p>
+        <p><strong>Color:</strong> {{ product.color }}</p>
+
+        <p class="description">
+          <strong>Description:</strong>
+          {{ product.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>No Data!</p>
+}

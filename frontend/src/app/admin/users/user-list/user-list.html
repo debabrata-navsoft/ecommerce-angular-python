@@ -1,0 +1,78 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="user-list">
+    <h2>Customers</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th (click)="toggleSort()" style="cursor: pointer">
+            <div class="id-arrow">
+              ID
+              <mat-icon class="material-icons-outlined">
+                {{ sortDirection() === 'desc' ? 'arrow_upward' : 'arrow_downward' }}
+              </mat-icon>
+            </div>
+          </th>
+
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Joined</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of paginatedUsers(); track user.uid; let i = $index) {
+          <tr>
+            <td>
+              {{
+                sortDirection() === 'asc'
+                  ? pageIndex() * pageSize() + i + 1
+                  : totalItems() - (pageIndex() * pageSize() + i)
+              }}
+            </td>
+            <!-- <td>{{ pageIndex * pageSize + i + 1 }}</td> -->
+
+            @if (user) {
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+            }
+
+            <!-- <td>{{ user.firstName }} {{ user.lastName }}</td> -->
+
+            <td>{{ user.email }}</td>
+
+            <td>{{ user.role || 'customer' }}</td>
+
+            <td>
+              {{ user.createdAt ? (user.createdAt | date: 'medium') : '—' }}
+            </td>
+
+            <td class="actions">
+              <button [routerLink]="['/admin/users', user.uid!]">View</button>
+              <button class="delete" (click)="deleteUser(user.uid!)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        }
+
+        @if (paginatedUsers().length === 0) {
+          <tr>
+            <td colspan="6">No users found</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <mat-paginator
+      [length]="totalItems()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+}

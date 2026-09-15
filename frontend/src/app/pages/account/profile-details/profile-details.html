@@ -1,0 +1,81 @@
+<h2>My Details</h2>
+
+<div class="card-box">
+  @if (!isEdit()) {
+    <p>
+      <strong>Name:</strong>
+      {{ user()?.firstName }} {{ user()?.lastName }}
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      {{ user()?.email }}
+    </p>
+
+    <p>
+      <strong>Phone:</strong>
+      {{ user()?.phoneNumber }}
+    </p>
+
+    <button type="button" (click)="edit()">Edit</button>
+  } @else {
+    <div class="form-group">
+      <label>First Name</label>
+      <input
+        type="text"
+        [value]="profileForm().firstName"
+        (input)="updateField('firstName', $any($event.target).value)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input
+        type="text"
+        [value]="profileForm().lastName"
+        (input)="updateField('lastName', $any($event.target).value)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [value]="user()?.email" disabled />
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="text"
+        [value]="profileForm().phoneNumber"
+        (input)="updateField('phoneNumber', $any($event.target).value)"
+      />
+    </div>
+
+    <div class="actions">
+      <button type="button" (click)="save()" [disabled]="isSaving()">
+        {{ isSaving() ? 'Saving...' : 'Save' }}
+      </button>
+
+      <button type="button" (click)="cancel()" [disabled]="isSaving()">Cancel</button>
+    </div>
+  }
+</div>
+
+<!-- <h2>My Details</h2>
+
+<div class="card-box">
+  <p>
+    <strong>Name:</strong>
+    {{ user()?.firstName }} {{ user()?.lastName }}
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    {{ user()?.email }}
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    {{ user()?.phoneNumber }}
+  </p>
+</div> -->

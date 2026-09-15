@@ -1,0 +1,155 @@
+.save-later-container {
+  background: #fff;
+  padding: 16px;
+  margin-top: 2rem;
+}
+
+.save-later-container h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #ccc;
+  margin: 10px 0;
+}
+
+.cart-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-image {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.cart-image img {
+  width: 100%;
+  max-width: 140px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.cart-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.small-text {
+  font-size: 12px;
+  color: #555;
+}
+
+.brand {
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  color: #555;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+.discount {
+  color: red;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+/* .discount-text {
+  color: #388e3c;
+  font-weight: 600;
+} */
+
+.final-price {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.original-price-mrp {
+  font-size: 13px;
+  margin: 0;
+}
+
+/* .price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.discount {
+  color: red;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.final-price {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.original-price-mrp {
+  font-size: 13px;
+  margin: 0;
+} */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.action-link {
+  font-size: 12px;
+  color: #007185;
+  padding: 0 8px;
+  border-right: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.action-link:last-child {
+  border-right: none;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 100px;
+  text-align: right;
+}

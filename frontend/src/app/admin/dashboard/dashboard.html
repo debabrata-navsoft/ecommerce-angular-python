@@ -1,0 +1,274 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="dashboard">
+    <!-- Top Bar -->
+    <div class="dash-topbar">
+      <div class="dash-topbar__left">
+        <h1 class="dash-topbar__title">Dashboard</h1>
+        <span>Welcome back, {{ adminName }}</span>
+        <!-- <p class="dash-topbar__sub">Welcome back, Admin</p> -->
+      </div>
+      <div class="dash-topbar__right">
+        <span class="dash-date">
+          <mat-icon class="material-icons-outlined">calendar_today</mat-icon>
+          {{ today | date: 'mediumDate' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card metric-card--blue">
+        <div class="metric-card__icon">
+          <mat-icon class="material-icons-outlined">people</mat-icon>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">Total Users</span>
+          <span class="metric-card__value">{{ totalUsers() }}</span>
+          <span class="metric-card__delta">
+            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            Active accounts
+          </span>
+        </div>
+      </div>
+
+      <div class="metric-card metric-card--green">
+        <div class="metric-card__icon">
+          <mat-icon class="material-icons-outlined">inventory_2</mat-icon>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">Total Products</span>
+          <span class="metric-card__value">{{ totalProducts() }}</span>
+          <span class="metric-card__delta">
+            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            In catalogue
+          </span>
+        </div>
+      </div>
+
+      <div class="metric-card metric-card--amber">
+        <div class="metric-card__icon">
+          <mat-icon class="material-icons-outlined">shopping_cart</mat-icon>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">Total Orders</span>
+          <span class="metric-card__value">{{ totalOrders() }}</span>
+          <span class="metric-card__delta">
+            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            All time
+          </span>
+        </div>
+      </div>
+
+      <div class="metric-card metric-card--red">
+        <div class="metric-card__icon">
+          <mat-icon class="material-icons-outlined">pending_actions</mat-icon>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">Pending Orders</span>
+          <span class="metric-card__value">{{ pendingOrders() }}</span>
+          <span class="metric-card__delta metric-card__delta--warn">
+            <mat-icon class="material-icons-outlined delta-icon">schedule</mat-icon>
+            Needs attention
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="dash-grid">
+      <!-- Recent Orders -->
+      <div class="dash-card dash-card--wide">
+        <div class="dash-card__header">
+          <div class="dash-card__title">
+            <mat-icon class="material-icons-outlined">receipt_long</mat-icon>
+            Recent Orders
+          </div>
+          <a routerLink="/admin/orders" class="dash-card__link">
+            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+          </a>
+        </div>
+
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (order of recentOrders(); track order.orderId) {
+                <tr>
+                  <td class="dash-table__id">#{{ order.orderId | slice: 0 : 8 }}</td>
+                  <td class="dash-table__user">{{ order.userEmail }}</td>
+                  <td class="dash-table__amount">₹{{ order.total | number: '1.0-0' }}</td>
+                  <td class="dash-table__date">{{ order.createdAt | date: 'dd MMM, y' }}</td>
+                  <td>
+                    <span
+                      class="status-badge"
+                      [class.status-badge--success]="order.status === 'delivered'"
+                      [class.status-badge--info]="order.status === 'shipped'"
+                      [class.status-badge--danger]="order.status === 'cancelled'"
+                      [class.status-badge--neutral]="order.status === 'pending'"
+                    >
+                      {{ order.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <a
+                      [routerLink]="['/admin/orders', order.orderId]"
+                      [queryParams]="{ userId: order.userId }"
+                      class="dash-action-btn"
+                    >
+                      <mat-icon class="material-icons-outlined">open_in_new</mat-icon>
+                    </a>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="dash-table__empty">No recent orders found.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Users -->
+      <div class="dash-card">
+        <div class="dash-card__header">
+          <div class="dash-card__title">
+            <mat-icon class="material-icons-outlined">group</mat-icon>
+            Recent Users
+          </div>
+          <a routerLink="/admin/users" class="dash-card__link">
+            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+          </a>
+        </div>
+
+        <ul class="user-list">
+          @for (user of recentUsers(); track user.uid) {
+            <li class="user-item">
+              <div class="user-item__avatar" [style.background]="getAvatarBg(user.email)">
+                {{ getInitials(user.email) }}
+              </div>
+              <div class="user-item__info">
+                <span class="user-item__name"
+                  >{{ user.firstName || 'Anonymous' }} {{ user.lastName || 'Anonymous' }}</span
+                >
+                <span class="user-item__email">{{ user.email }}</span>
+              </div>
+              <div class="user-item__meta">
+                <span class="user-item__date">{{ user.createdAt | date: 'dd MMM' }}</span>
+                <a [routerLink]="['/admin/users', user.uid]" class="dash-action-btn">
+                  <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+                </a>
+              </div>
+            </li>
+          } @empty {
+            <li class="dash-table__empty">No users found.</li>
+          }
+        </ul>
+      </div>
+
+      <!-- Top Products -->
+      <div class="dash-card">
+        <div class="dash-card__header">
+          <div class="dash-card__title">
+            <mat-icon class="material-icons-outlined">storefront</mat-icon>
+            Top Products
+          </div>
+          <a routerLink="/admin/products" class="dash-card__link">
+            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+          </a>
+        </div>
+
+        <ul class="product-list">
+          @for (product of topProducts(); track product.id; let i = $index) {
+            <li class="product-item">
+              <span class="product-item__rank">{{ i + 1 }}</span>
+              @if (product.image) {
+                <img class="product-item__img" [src]="product.image" [alt]="product.title" />
+              } @else {
+                <div class="product-item__img product-item__img--placeholder">
+                  <mat-icon class="material-icons-outlined">image_not_supported</mat-icon>
+                </div>
+              }
+              <div class="product-item__info">
+                <span class="product-item__name">{{ product.title | truncate: 28 }}</span>
+                <span class="product-item__price">
+                  ₹{{ getDiscountPrice(product) | number: '1.0-0' }}
+                  @if (product.discount && product.discount > 0) {
+                    <span class="product-item__discount">{{ product.discount }}% off</span>
+                  }
+                </span>
+              </div>
+              <a [routerLink]="['/admin/products/edit', product.id]" class="dash-action-btn">
+                <mat-icon class="material-icons-outlined">edit</mat-icon>
+              </a>
+            </li>
+          } @empty {
+            <li class="dash-table__empty">No products found.</li>
+          }
+        </ul>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="dash-card">
+        <div class="dash-card__header">
+          <div class="dash-card__title">
+            <mat-icon class="material-icons-outlined">bolt</mat-icon>
+            Quick Actions
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <a routerLink="/admin/products/add-product" class="quick-action quick-action--blue">
+            <mat-icon class="material-icons-outlined">add_circle</mat-icon>
+            <span class="quick-action__label">Add Product</span>
+            <span class="quick-action__sub">New listing</span>
+          </a>
+          <a routerLink="/admin/users" class="quick-action quick-action--green">
+            <mat-icon class="material-icons-outlined">manage_accounts</mat-icon>
+            <span class="quick-action__label">Manage Users</span>
+            <span class="quick-action__sub">{{ totalUsers() }} accounts</span>
+          </a>
+          <a routerLink="/admin/orders" class="quick-action quick-action--amber">
+            <mat-icon class="material-icons-outlined">local_shipping</mat-icon>
+            <span class="quick-action__label">All Orders</span>
+            <span class="quick-action__sub">{{ totalOrders() }} total</span>
+          </a>
+          <a
+            routerLink="/admin/orders"
+            [queryParams]="{ status: 'pending' }"
+            class="quick-action quick-action--red"
+          >
+            <mat-icon class="material-icons-outlined">hourglass_top</mat-icon>
+            <span class="quick-action__label">Pending</span>
+            <span class="quick-action__sub">{{ pendingOrders() }} waiting</span>
+          </a>
+          <a routerLink="/admin/products" class="quick-action quick-action--purple">
+            <mat-icon class="material-icons-outlined">inventory</mat-icon>
+            <span class="quick-action__label">Inventory</span>
+            <span class="quick-action__sub">{{ totalProducts() }} items</span>
+          </a>
+          <a
+            routerLink="/admin/orders"
+            [queryParams]="{ status: 'cancelled' }"
+            class="quick-action quick-action--neutral"
+          >
+            <mat-icon class="material-icons-outlined">cancel</mat-icon>
+            <span class="quick-action__label">Cancelled</span>
+            <span class="quick-action__sub">{{ cancelledOrders() }} orders</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}

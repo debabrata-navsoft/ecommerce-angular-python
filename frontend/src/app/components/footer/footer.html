@@ -1,0 +1,67 @@
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Left / Brand Info -->
+    <div class="footer-left">
+      <a routerLink="/">SnapCart</a>
+      <p>Your one-stop online store for groceries, essentials & more.</p>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook">
+          <fa-icon [icon]="faFacebook"></fa-icon>
+        </a>
+
+        <a href="#" aria-label="Instagram">
+          <fa-icon [icon]="faInstagram"></fa-icon>
+        </a>
+
+        <a href="#" aria-label="X">
+          <fa-icon [icon]="faXTwitter"></fa-icon>
+        </a>
+
+        <a href="#" aria-label="YouTube">
+          <fa-icon [icon]="faYoutube"></fa-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <nav>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+        <a routerLink="/products" routerLinkActive="active">All Products</a>
+        <a routerLink="/cart" routerLinkActive="active">Cart</a>
+        <a routerLink="/about" routerLinkActive="active">About</a>
+        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Categories -->
+    <div class="footer-categories">
+      <h4>Categories</h4>
+      <nav>
+        <a routerLink="/products" [queryParams]="{ main: 'electronics' }">Electronics</a>
+        <a routerLink="/products" [queryParams]="{ main: 'fashion' }">Fashion</a>
+        <a routerLink="/products" [queryParams]="{ main: 'footwear' }">Footwear</a>
+        <a routerLink="/products" [queryParams]="{ main: 'groceries' }">Groceries</a>
+        <a routerLink="/products" [queryParams]="{ main: 'baby-kids' }">Baby & Kids</a>
+        <a routerLink="/products" [queryParams]="{ main: 'pet-supplies' }">Pet Supplies</a>
+        <a routerLink="/products" [queryParams]="{ main: 'bags' }">Bags</a>
+        <a routerLink="/products" [queryParams]="{ main: 'jewellery' }">Jewellery </a>
+      </nav>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@snapcart.com</p>
+      <p>Phone: +91 9876543210</p>
+      <p>Address: 123 Market Street, Mumbai, India</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} SnapCart. All rights reserved.</p>
+  </div>
+</footer>

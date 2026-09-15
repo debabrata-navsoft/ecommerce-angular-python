@@ -1,0 +1,44 @@
+@if (savedItems().length > 0) {
+  <div class="save-later-container">
+    <h2>Saved for Later ({{ savedItems().length }})</h2>
+
+    <div class="divider"></div>
+
+    @for (item of savedItems(); track item.id) {
+      <div class="cart-item">
+        <div (click)="viewDetails(item.id)" class="cart-image">
+          <img [src]="item.image" [alt]="item.name" />
+        </div>
+
+        <div class="cart-details">
+          <p (click)="viewDetails(item.id)" class="cart-title">{{ item.name }}</p>
+
+          <span class="small-text"> <b>Category:</b> {{ item.subCategory | categoryLabel }} </span>
+          <span class="brand"><strong>Brand:</strong> {{ item.brand }}</span>
+
+          <div class="price-box">
+            <div>
+              @if (item.discount && item.discount > 0) {
+                <span class="discount"> -{{ item.discount }}% </span>
+              }
+
+              <span class="final-price"> ₹{{ getDiscountPrice(item) | number: '1.0-0' }}.00 </span>
+            </div>
+
+            <p class="original-price-mrp">
+              M.R.P.:
+              <span class="original-price"> ₹{{ item.price | number: '1.0-0' }}.00 </span>
+            </p>
+          </div>
+
+          <div class="actions">
+            <span class="action-link" (click)="moveToCart(item)">Move to Cart</span>
+            <span class="action-link" (click)="remove(item.id)">Delete</span>
+          </div>
+        </div>
+
+        <div class="price">₹{{ getDiscountPrice(item) | number: '1.0-0' }}.00</div>
+      </div>
+    }
+  </div>
+}

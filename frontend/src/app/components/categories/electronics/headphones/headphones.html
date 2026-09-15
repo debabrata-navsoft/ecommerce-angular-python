@@ -1,0 +1,8 @@
+<div class="deals-grid">
+  @for (product of products(); track product.id) {
+    <div class="deal-card" (click)="viewDetails(product.id!)">
+      <span class="discount-badge">-{{ product.discount }}% off</span>
+      <img [src]="product.image" [alt]="product.title" class="deal-img" />
+    </div>
+  }
+</div>

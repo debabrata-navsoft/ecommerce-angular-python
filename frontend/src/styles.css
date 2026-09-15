@@ -1,0 +1,62 @@
+/* * {
+  box-sizing: border-box;
+} */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #e9ecef;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.snackbar-success .mdc-snackbar__surface {
+  background-color: white !important;
+  color: #4caf50 !important;
+}
+
+.snackbar-error .mdc-snackbar__surface {
+  background-color: white !important;
+  color: #f44336 !important;
+}
+
+.snackbar-success .mat-mdc-snack-bar-action,
+.snackbar-error .mat-mdc-snack-bar-action {
+  color: #000 !important;
+  opacity: 0.9;
+}
+
+.snackbar-success .mat-mdc-snack-bar-action:hover,
+.snackbar-error .mat-mdc-snack-bar-action:hover {
+  opacity: 1;
+}
+
+.admin-login-btn mat-progress-spinner circle {
+  stroke: white !important;
+}
+
+.login-btn mat-progress-spinner circle {
+  stroke: black !important;
+}
+
+/* .mat-mdc-snack-bar-container.snackbar-error {
+  --mdc-snackbar-container-color: #d32f2f;
+  color: #a11919;
+}
+
+.mat-mdc-snack-bar-container.snackbar-success {
+  --mdc-snackbar-container-color: #2e7d32;
+  color: #fff;
+} */
+
+.cdk-overlay-container {
+  z-index: 1200 !important;
+}

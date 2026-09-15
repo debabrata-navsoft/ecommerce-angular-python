@@ -1,0 +1,84 @@
+.about {
+  /* max-width: 80%; */
+  margin: auto;
+  min-height: 100vh;
+  background: #f9fafb;
+  margin: 1rem 0;
+}
+
+.about-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  line-height: 1.8;
+  font-family: Arial, sans-serif;
+  /* background: #ffffff; */
+  /* border-radius: 10px; */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); */
+}
+
+/* Main Title */
+.about-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #222;
+}
+
+/* Section Headings */
+.about-page h2 {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  color: #333;
+  border-left: 4px solid #ff6b6b;
+  padding-left: 10px;
+}
+
+/* Paragraphs */
+.about-page p {
+  margin-bottom: 1rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+/* List */
+.about-page ul {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.about-page ul li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* Custom bullet */
+.about-page ul li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #28a745;
+}
+
+/* Links */
+.about-page a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.about-page a:hover {
+  text-decoration: underline;
+}
+
+/* .about-page section {
+  transition: 0.3s ease;
+}
+
+.about-page section:hover {
+  transform: translateY(-2px);
+} */

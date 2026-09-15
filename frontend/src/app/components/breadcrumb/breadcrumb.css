@@ -1,0 +1,40 @@
+/* :host {
+  display: block;
+}
+
+:host:empty {
+  display: none;
+} */
+
+.breadcrumb-container {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  /* margin: 12px 0; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-top: 1px solid #dee2e6;
+  padding-top: 10px;
+  padding-bottom: 2px;
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.breadcrumb-current {
+  font-weight: bold;
+  color: #333;
+}
+
+.breadcrumb-separator {
+  margin: 0 5px;
+  color: #555;
+}

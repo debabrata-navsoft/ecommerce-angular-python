@@ -1,0 +1,61 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="account-page">
+    <aside class="account-sidebar">
+      <div class="profile-box">
+        <div class="avatar">
+          {{ user()?.firstName?.charAt(0) }}{{ user()?.lastName?.charAt(0) }}
+        </div>
+
+        <div class="profile-name">
+          <p>Hi,</p>
+          <h3>{{ user()?.firstName }} {{ user()?.lastName }}</h3>
+        </div>
+      </div>
+
+      <ul class="menu-list">
+        <li (click)="changeSection('orders')" [class.active]="activeSection === 'orders'">
+          My Orders
+        </li>
+
+        <li (click)="changeSection('profile')" [class.active]="activeSection === 'profile'">
+          My Details
+        </li>
+
+        <li (click)="changeSection('address')" [class.active]="activeSection === 'address'">
+          Address Book
+        </li>
+
+        <li (click)="changeSection('payment')" [class.active]="activeSection === 'payment'">
+          Payment Methods
+        </li>
+
+        <li (click)="logout()">Sign Out</li>
+      </ul>
+    </aside>
+
+    <section class="account-content">
+      @if (activeSection === 'profile') {
+        <app-profile-details [user]="user()" (userUpdated)="user.set($event)">
+        </app-profile-details>
+      }
+
+      @if (activeSection === 'address') {
+        <app-address [user]="user()"></app-address>
+      }
+
+      @if (activeSection === 'orders') {
+        <app-order-history [orders]="orders()"></app-order-history>
+      }
+
+      @if (activeSection === 'payment') {
+        <h2>Payment Methods</h2>
+
+        <div class="card-box">
+          <button>Add New Payment Method</button>
+        </div>
+      }
+    </section>
+  </div>
+}

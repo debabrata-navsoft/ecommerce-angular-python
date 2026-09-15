@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+  :root {
+  --font-sans: Arial, sans-serif;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+
+  --color-border-secondary: #d1d5db;
+
+  --color-bg: #ffffff;
+
+  --purple: #7c3aed;
+  --teal: #14b8a6;
+  --coral: #f97316;
+  --amber: #f59e0b;
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --gray: #6b7280;
+}
+
+/* SVG theme classes */
+.c-purple rect { fill: #f3e8ff; stroke: var(--purple); }
+.c-teal rect { fill: #ccfbf1; stroke: var(--teal); }
+.c-coral rect { fill: #ffedd5; stroke: var(--coral); }
+.c-amber rect { fill: #fef3c7; stroke: var(--amber); }
+.c-blue rect { fill: #dbeafe; stroke: var(--blue); }
+.c-green rect { fill: #dcfce7; stroke: var(--green); }
+.c-gray rect { fill: #f3f4f6; stroke: var(--gray); }
+
+.th {
+  font-size: 14px;
+  font-weight: 700;
+  fill: #111827;
+}
+
+.ts {
+  font-size: 11px;
+  fill: #374151;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, sans-serif); background: transparent; color: var(--color-text-primary); }
+.wrap { padding: 16px 0; }
+.tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.tab { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--color-border-secondary); color: var(--color-text-secondary); background: transparent; transition: all .15s; }
+.tab.active { border-color: #534AB7; color: #534AB7; background: #EEEDFE; }
+.panel { display: none; }
+.panel.active { display: block; }
+svg text { font-family: var(--font-sans, sans-serif); }
+
+
+/* Responsive container */
+.wrap {
+  padding: 16px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Better SVG responsive */
+svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Better text rendering */
+svg text {
+  font-family: var(--font-sans, sans-serif);
+  word-spacing: 1px;
+}
+
+/* Main title text */
+.th {
+  font-size: 13px;
+  font-weight: 700;
+  fill: #111827;
+}
+
+/* Small description text */
+.ts {
+  font-size: 10px;
+  fill: #374151;
+}
+
+/* Improve node hover */
+.node rect {
+  transition: all 0.2s ease;
+}
+
+.node:hover rect {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .tabs {
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tab {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+
+  .th {
+    font-size: 11px;
+  }
+
+  .ts {
+    font-size: 8px;
+  }
+
+  svg {
+    min-width: 900px;
+  }
+}
+
+/* Prevent text overflow */
+text {
+  overflow: hidden;
+}
+
+/* Smooth UI */
+.panel {
+  animation: fade .25s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="show('overview')">Overview</button>
+    <button class="tab" onclick="show('auth')">Auth flow</button>
+    <button class="tab" onclick="show('data')">Firestore data</button>
+    <button class="tab" onclick="show('payment')">Payment flow</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="panel active" id="panel-overview">
+  <svg width="100%" viewBox="0 0 680 760" role="img">
+    <title>App architecture overview</title>
+    <desc>Layers: Angular SSR shell, layouts, pages, services, Firebase backend, Razorpay</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- Layer 1: Angular SSR -->
+    <g class="c-purple">
+      <rect x="30" y="20" width="620" height="64" rx="12" stroke-width="0.5"/>
+      <text class="th" x="340" y="45" text-anchor="middle" dominant-baseline="central">Angular 17 SSR shell</text>
+      <text class="ts" x="340" y="65" text-anchor="middle" dominant-baseline="central">server.ts · main.server.ts · Express · isPlatformBrowser guards throughout</text>
+    </g>
+
+    <!-- arrow -->
+    <line x1="340" y1="84" x2="340" y2="106" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <!-- Layer 2: Layouts -->
+    <g class="c-purple">
+      <rect x="30" y="110" width="300" height="64" rx="12" stroke-width="0.5"/>
+      <text class="th" x="180" y="133" text-anchor="middle" dominant-baseline="central">Customer layout</text>
+      <text class="ts" x="180" y="153" text-anchor="middle" dominant-baseline="central">Header · Navbar · Footer</text>
+    </g>
+    <g class="c-coral">
+      <rect x="350" y="110" width="300" height="64" rx="12" stroke-width="0.5"/>
+      <text class="th" x="500" y="133" text-anchor="middle" dominant-baseline="central">Admin layout</text>
+      <text class="ts" x="500" y="153" text-anchor="middle" dominant-baseline="central">Admin header · admin routes</text>
+    </g>
+
+    <line x1="180" y1="174" x2="180" y2="196" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="500" y1="174" x2="500" y2="196" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <!-- Layer 3: Pages -->
+    <g class="c-teal">
+      <rect x="30" y="200" width="620" height="134" rx="12" stroke-width="0.5"/>
+      <text class="th" x="340" y="222" text-anchor="middle" dominant-baseline="central">Pages</text>
+    </g>
+    <!-- Row 1 pages -->
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Home page in this Angular app')">
+      <rect x="50" y="234" width="88" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="94" y="252" text-anchor="middle" dominant-baseline="central">Home</text>
+      <text class="ts" x="94" y="267" text-anchor="middle" dominant-baseline="central">Hero · categories</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Product list and detail pages')">
+      <rect x="150" y="234" width="88" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="194" y="252" text-anchor="middle" dominant-baseline="central">Products</text>
+      <text class="ts" x="194" y="267" text-anchor="middle" dominant-baseline="central">List · detail</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Cart and Checkout flow')">
+      <rect x="250" y="234" width="88" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="294" y="252" text-anchor="middle" dominant-baseline="central">Cart</text>
+      <text class="ts" x="294" y="267" text-anchor="middle" dominant-baseline="central">Cart · checkout</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Payment page and Razorpay integration')">
+      <rect x="350" y="234" width="88" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="394" y="252" text-anchor="middle" dominant-baseline="central">Payment</text>
+      <text class="ts" x="394" y="267" text-anchor="middle" dominant-baseline="central">Razorpay modal</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Profile and Account pages')">
+      <rect x="450" y="234" width="88" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="494" y="252" text-anchor="middle" dominant-baseline="central">Account</text>
+      <text class="ts" x="494" y="267" text-anchor="middle" dominant-baseline="central">Profile · address</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Wishlist page')">
+      <rect x="550" y="234" width="80" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="590" y="252" text-anchor="middle" dominant-baseline="central">Wishlist</text>
+      <text class="ts" x="590" y="267" text-anchor="middle" dominant-baseline="central">Saved items</text>
+    </g>
+    <!-- Row 2 pages -->
+    <g class="c-coral node" onclick="sendPrompt('Tell me about the Admin panel pages')">
+      <rect x="50" y="290" width="200" height="34" rx="8" stroke-width="0.5"/>
+      <text class="th" x="150" y="307" text-anchor="middle" dominant-baseline="central">Admin — products · orders · users</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about auth pages: login and signup')">
+      <rect x="264" y="290" width="126" height="34" rx="8" stroke-width="0.5"/>
+      <text class="th" x="327" y="307" text-anchor="middle" dominant-baseline="central">Auth — login · signup</text>
+    </g>
+    <g class="c-teal node" onclick="sendPrompt('Tell me about the Order history and Order success pages')">
+      <rect x="402" y="290" width="228" height="34" rx="8" stroke-width="0.5"/>
+      <text class="th" x="516" y="307" text-anchor="middle" dominant-baseline="central">Orders — history · success</text>
+    </g>
+
+    <!-- Arrow down to services -->
+    <line x1="340" y1="334" x2="340" y2="356" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <!-- Layer 4: Services + Guards -->
+    <g class="c-blue">
+      <rect x="30" y="360" width="620" height="124" rx="12" stroke-width="0.5"/>
+      <text class="th" x="340" y="382" text-anchor="middle" dominant-baseline="central">Angular services &amp; guards</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('Explain the AuthService in this app')">
+      <rect x="50" y="394" width="96" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="98" y="412" text-anchor="middle" dominant-baseline="central">AuthService</text>
+      <text class="ts" x="98" y="427" text-anchor="middle" dominant-baseline="central">signal · PKCE</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('Explain the CartService in this app')">
+      <rect x="158" y="394" width="90" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="203" y="412" text-anchor="middle" dominant-baseline="central">CartService</text>
+      <text class="ts" x="203" y="427" text-anchor="middle" dominant-baseline="central">signal · Firestore</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('Explain the ProductService in this app')">
+      <rect x="260" y="394" width="100" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="310" y="412" text-anchor="middle" dominant-baseline="central">ProductService</text>
+      <text class="ts" x="310" y="427" text-anchor="middle" dominant-baseline="central">CRUD · scoring</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('Explain the OrderService in this app')">
+      <rect x="372" y="394" width="90" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="417" y="412" text-anchor="middle" dominant-baseline="central">OrderService</text>
+      <text class="ts" x="417" y="427" text-anchor="middle" dominant-baseline="central">dual-write</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('Explain the WishlistService in this app')">
+      <rect x="474" y="394" width="96" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="522" y="412" text-anchor="middle" dominant-baseline="central">WishlistService</text>
+      <text class="ts" x="522" y="427" text-anchor="middle" dominant-baseline="central">signal · per user</text>
+    </g>
+    <g class="c-coral node" onclick="sendPrompt('Explain the RazorpayService in this app')">
+      <rect x="50" y="450" width="106" height="24" rx="6" stroke-width="0.5"/>
+      <text class="ts" x="103" y="462" text-anchor="middle" dominant-baseline="central">RazorpayService</text>
+    </g>
+    <g class="c-gray node" onclick="sendPrompt('Explain the guards: authGuard and adminAuthGuard')">
+      <rect x="168" y="450" width="160" height="24" rx="6" stroke-width="0.5"/>
+      <text class="ts" x="248" y="462" text-anchor="middle" dominant-baseline="central">authGuard · adminAuthGuard</text>
+    </g>
+    <g class="c-gray node" onclick="sendPrompt('Tell me about the shared pipes and directives in this app')">
+      <rect x="340" y="450" width="190" height="24" rx="6" stroke-width="0.5"/>
+      <text class="ts" x="435" y="462" text-anchor="middle" dominant-baseline="central">truncate · timeAgo · categoryLabel</text>
+    </g>
+
+    <!-- Arrow down to Firebase -->
+    <line x1="260" y1="484" x2="210" y2="506" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="400" y1="484" x2="450" y2="506" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <!-- Layer 5: Backend -->
+    <g class="c-amber">
+      <rect x="30" y="510" width="300" height="90" rx="12" stroke-width="0.5"/>
+      <text class="th" x="180" y="532" text-anchor="middle" dominant-baseline="central">Firebase (Google Cloud)</text>
+    </g>
+    <g class="c-amber node" onclick="sendPrompt('How does Firebase Auth work in this app?')">
+      <rect x="50" y="546" width="106" height="36" rx="8" stroke-width="0.5"/>
+      <text class="th" x="103" y="558" text-anchor="middle" dominant-baseline="central">Firebase Auth</text>
+      <text class="ts" x="103" y="573" text-anchor="middle" dominant-baseline="central">email + role check</text>
+    </g>
+    <g class="c-amber node" onclick="sendPrompt('Explain the Firestore data model in this app')">
+      <rect x="166" y="546" width="144" height="36" rx="8" stroke-width="0.5"/>
+      <text class="th" x="238" y="558" text-anchor="middle" dominant-baseline="central">Firestore</text>
+      <text class="ts" x="238" y="573" text-anchor="middle" dominant-baseline="central">products · users · orders</text>
+    </g>
+
+    <g class="c-coral">
+      <rect x="350" y="510" width="300" height="90" rx="12" stroke-width="0.5"/>
+      <text class="th" x="500" y="532" text-anchor="middle" dominant-baseline="central">Razorpay</text>
+    </g>
+    <g class="c-coral node" onclick="sendPrompt('How does the Razorpay checkout modal work?')">
+      <rect x="370" y="546" width="120" height="36" rx="8" stroke-width="0.5"/>
+      <text class="th" x="430" y="558" text-anchor="middle" dominant-baseline="central">Checkout modal</text>
+      <text class="ts" x="430" y="573" text-anchor="middle" dominant-baseline="central">UPI · card · EMI · net</text>
+    </g>
+    <g class="c-coral node" onclick="sendPrompt('What currency and amount handling does Razorpay use?')">
+      <rect x="500" y="546" width="130" height="36" rx="8" stroke-width="0.5"/>
+      <text class="th" x="565" y="558" text-anchor="middle" dominant-baseline="central">INR / paise</text>
+      <text class="ts" x="565" y="573" text-anchor="middle" dominant-baseline="central">test key in env</text>
+    </g>
+
+    <!-- Legend -->
+    <g class="c-purple"><rect x="30" y="626" width="10" height="10" rx="2"/></g>
+    <text class="ts" x="46" y="635" dominant-baseline="central">Angular layer</text>
+    <g class="c-teal"><rect x="130" y="626" width="10" height="10" rx="2"/></g>
+    <text class="ts" x="146" y="635" dominant-baseline="central">Customer feature</text>
+    <g class="c-coral"><rect x="250" y="626" width="10" height="10" rx="2"/></g>
+    <text class="ts" x="266" y="635" dominant-baseline="central">Admin / payment</text>
+    <g class="c-amber"><rect x="370" y="626" width="10" height="10" rx="2"/></g>
+    <text class="ts" x="386" y="635" dominant-baseline="central">Firebase backend</text>
+    <g class="c-blue"><rect x="480" y="626" width="10" height="10" rx="2"/></g>
+    <text class="ts" x="496" y="635" dominant-baseline="central">Services</text>
+  </svg>
+  </div>
+
+  <!-- AUTH FLOW -->
+  <div class="panel" id="panel-auth">
+  <svg width="100%" viewBox="0 0 680 560" role="img">
+    <title>Auth flow</title>
+    <desc>Login and guard flow using Firebase Auth, authGuard, adminAuthGuard and Angular signals</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <g class="c-gray node">
+      <rect x="240" y="20" width="200" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="42" text-anchor="middle" dominant-baseline="central">User visits protected route</text>
+    </g>
+    <line x1="340" y1="64" x2="340" y2="90" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-purple node" onclick="sendPrompt('Explain the authGuard in detail')">
+      <rect x="240" y="94" width="200" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">authGuard</text>
+      <text class="ts" x="340" y="128" text-anchor="middle" dominant-baseline="central">firebaseUser$ · isPlatformBrowser</text>
+    </g>
+
+    <line x1="240" y1="116" x2="140" y2="160" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="440" y1="116" x2="540" y2="160" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <text class="ts" x="166" y="146" text-anchor="middle">no user</text>
+    <text class="ts" x="514" y="146" text-anchor="middle">user exists</text>
+
+    <g class="c-coral node" onclick="sendPrompt('What happens when a user is redirected to login?')">
+      <rect x="54" y="164" width="172" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="140" y="182" text-anchor="middle" dominant-baseline="central">Redirect → /login</text>
+      <text class="ts" x="140" y="198" text-anchor="middle" dominant-baseline="central">save redirectUrl in localStorage</text>
+    </g>
+    <g class="c-teal node">
+      <rect x="454" y="164" width="172" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="540" y="182" text-anchor="middle" dominant-baseline="central">Route allowed</text>
+      <text class="ts" x="540" y="198" text-anchor="middle" dominant-baseline="central">currentUser signal updated</text>
+    </g>
+
+    <line x1="140" y1="208" x2="140" y2="254" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-purple node" onclick="sendPrompt('How does login-page work with Firebase?')">
+      <rect x="54" y="258" width="172" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="140" y="278" text-anchor="middle" dominant-baseline="central">LoginPage</text>
+      <text class="ts" x="140" y="296" text-anchor="middle" dominant-baseline="central">signInWithEmailAndPassword</text>
+      <text class="ts" x="140" y="309" text-anchor="middle" dominant-baseline="central">role check → user only</text>
+    </g>
+
+    <line x1="140" y1="314" x2="140" y2="350" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-amber node" onclick="sendPrompt('How does role-based access work in this app?')">
+      <rect x="54" y="354" width="172" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="140" y="374" text-anchor="middle" dominant-baseline="central">Firestore role check</text>
+      <text class="ts" x="140" y="392" text-anchor="middle" dominant-baseline="central">users/{uid}.role === user</text>
+      <text class="ts" x="140" y="405" text-anchor="middle" dominant-baseline="central">else → signOut + error</text>
+    </g>
+
+    <line x1="226" y1="382" x2="280" y2="382" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-teal node" onclick="sendPrompt('What Angular signals does AuthService expose?')">
+      <rect x="284" y="354" width="172" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="370" y="374" text-anchor="middle" dominant-baseline="central">AuthService signals</text>
+      <text class="ts" x="370" y="392" text-anchor="middle" dominant-baseline="central">currentUser · isAuthReady</text>
+      <text class="ts" x="370" y="406" text-anchor="middle" dominant-baseline="central">firebaseUser$ Observable</text>
+    </g>
+
+    <!-- Admin path -->
+    <g class="c-coral node" onclick="sendPrompt('How does the adminAuthGuard work?')">
+      <rect x="454" y="258" width="172" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="540" y="278" text-anchor="middle" dominant-baseline="central">adminAuthGuard</text>
+      <text class="ts" x="540" y="296" text-anchor="middle" dominant-baseline="central">role === admin check</text>
+      <text class="ts" x="540" y="309" text-anchor="middle" dominant-baseline="central">guards /admin/* routes</text>
+    </g>
+    <line x1="540" y1="208" x2="540" y2="258" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <text class="ts" x="480" y="238" dominant-baseline="central">admin route?</text>
+
+    <text class="ts" x="340" y="490" text-anchor="middle" dominant-baseline="central">SnackbarService shows error messages for failed auth · all guards are SSR-safe via isPlatformBrowser</text>
+  </svg>
+  </div>
+
+  <!-- FIRESTORE DATA MODEL -->
+  <div class="panel" id="panel-data">
+  <svg width="100%" viewBox="0 0 680 560" role="img">
+    <title>Firestore data model</title>
+    <desc>Collections: products, orders (global), users with subcollections cart, wishlist, orders</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- products collection -->
+    <g class="c-teal node" onclick="sendPrompt('What fields does a Product document have in Firestore?')">
+      <rect x="30" y="30" width="180" height="180" rx="12" stroke-width="0.5"/>
+      <text class="th" x="120" y="54" text-anchor="middle" dominant-baseline="central">products/{id}</text>
+      <text class="ts" x="54" y="80" dominant-baseline="central">id: string</text>
+      <text class="ts" x="54" y="98" dominant-baseline="central">title · price · stock</text>
+      <text class="ts" x="54" y="116" dominant-baseline="central">brand · color · category</text>
+      <text class="ts" x="54" y="134" dominant-baseline="central">subCategory · image</text>
+      <text class="ts" x="54" y="152" dominant-baseline="central">discount · rating</text>
+      <text class="ts" x="54" y="170" dominant-baseline="central">sales · views</text>
+      <text class="ts" x="54" y="188" dominant-baseline="central">createdAt: number</text>
+    </g>
+
+    <!-- users collection -->
+    <g class="c-blue node" onclick="sendPrompt('What fields does a User document have in Firestore?')">
+      <rect x="240" y="30" width="200" height="180" rx="12" stroke-width="0.5"/>
+      <text class="th" x="340" y="54" text-anchor="middle" dominant-baseline="central">users/{uid}</text>
+      <text class="ts" x="264" y="80" dominant-baseline="central">uid · firstName · lastName</text>
+      <text class="ts" x="264" y="98" dominant-baseline="central">email · phoneNumber[]</text>
+      <text class="ts" x="264" y="116" dominant-baseline="central">role: user | admin</text>
+      <text class="ts" x="264" y="134" dominant-baseline="central">addresses[]</text>
+      <text class="ts" x="264" y="152" dominant-baseline="central">createdAt: serverTimestamp</text>
+    </g>
+
+    <!-- global orders -->
+    <g class="c-amber node" onclick="sendPrompt('What does the global orders collection look like?')">
+      <rect x="470" y="30" width="180" height="180" rx="12" stroke-width="0.5"/>
+      <text class="th" x="560" y="54" text-anchor="middle" dominant-baseline="central">orders/{orderId}</text>
+      <text class="ts" x="494" y="80" dominant-baseline="central">orderId · userId</text>
+      <text class="ts" x="494" y="98" dominant-baseline="central">items: OrderItem[]</text>
+      <text class="ts" x="494" y="116" dominant-baseline="central">address: OrderAddress</text>
+      <text class="ts" x="494" y="134" dominant-baseline="central">subTotal · gst · total</text>
+      <text class="ts" x="494" y="152" dominant-baseline="central">shippingMethod</text>
+      <text class="ts" x="494" y="170" dominant-baseline="central">status: pending…</text>
+      <text class="ts" x="494" y="188" dominant-baseline="central">createdAt: number</text>
+    </g>
+
+    <!-- Subcollections from users -->
+    <line x1="340" y1="210" x2="200" y2="280" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="340" y1="210" x2="340" y2="280" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="340" y1="210" x2="480" y2="280" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <text class="ts" x="340" y="268" text-anchor="middle">subcollections</text>
+
+    <g class="c-blue node" onclick="sendPrompt('What is stored in users/uid/cart?')">
+      <rect x="110" y="284" width="180" height="80" rx="8" stroke-width="0.5"/>
+      <text class="th" x="200" y="304" text-anchor="middle" dominant-baseline="central">users/{uid}/cart</text>
+      <text class="ts" x="200" y="322" text-anchor="middle" dominant-baseline="central">CartItem: id · name · price</text>
+      <text class="ts" x="200" y="338" text-anchor="middle" dominant-baseline="central">quantity · discount · createdAt</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('What is stored in users/uid/wishlist?')">
+      <rect x="300" y="284" width="180" height="80" rx="8" stroke-width="0.5"/>
+      <text class="th" x="390" y="304" text-anchor="middle" dominant-baseline="central">users/{uid}/wishlist</text>
+      <text class="ts" x="390" y="322" text-anchor="middle" dominant-baseline="central">Product doc copy</text>
+      <text class="ts" x="390" y="338" text-anchor="middle" dominant-baseline="central">createdAt: Date.now()</text>
+    </g>
+    <g class="c-blue node" onclick="sendPrompt('What is stored in users/uid/orders?')">
+      <rect x="490" y="284" width="160" height="80" rx="8" stroke-width="0.5"/>
+      <text class="th" x="570" y="304" text-anchor="middle" dominant-baseline="central">users/{uid}/orders</text>
+      <text class="ts" x="570" y="322" text-anchor="middle" dominant-baseline="central">Full Order doc</text>
+      <text class="ts" x="570" y="338" text-anchor="middle" dominant-baseline="central">mirrored from /orders</text>
+    </g>
+
+    <!-- dual-write note -->
+    <g class="c-coral">
+      <rect x="110" y="400" width="540" height="50" rx="8" stroke-width="0.5"/>
+      <text class="th" x="380" y="420" text-anchor="middle" dominant-baseline="central">Dual-write pattern (OrderService)</text>
+      <text class="ts" x="380" y="437" text-anchor="middle" dominant-baseline="central">createOrder writes to both users/{uid}/orders/{id} AND orders/{id} — enables admin getAllOrders()</text>
+    </g>
+
+    <line x1="560" y1="364" x2="560" y2="394" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="560" y1="394" x2="600" y2="398" stroke="var(--color-border-secondary)" stroke-width="1"/>
+    <line x1="650" y1="390" x2="650" y2="120" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+  </svg>
+  </div>
+
+  <!-- PAYMENT FLOW -->
+  <div class="panel" id="panel-payment">
+  <svg width="100%" viewBox="0 0 680 520" role="img">
+    <title>Payment flow</title>
+    <desc>Checkout → address → payment method selection → Razorpay modal → order created in Firestore</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <g class="c-teal node">
+      <rect x="240" y="20" width="200" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="38" text-anchor="middle" dominant-baseline="central">CartPage</text>
+      <text class="ts" x="340" y="54" text-anchor="middle" dominant-baseline="central">CartService signals · totalPrice</text>
+    </g>
+    <line x1="340" y1="64" x2="340" y2="90" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-teal node" onclick="sendPrompt('How does the checkout address page work?')">
+      <rect x="240" y="94" width="200" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">CheckoutAddressPage</text>
+      <text class="ts" x="340" y="128" text-anchor="middle" dominant-baseline="central">select / enter delivery address</text>
+    </g>
+    <line x1="340" y1="138" x2="340" y2="164" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-teal node" onclick="sendPrompt('How does the payment page let users select a method?')">
+      <rect x="240" y="168" width="200" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="186" text-anchor="middle" dominant-baseline="central">PaymentPage</text>
+      <text class="ts" x="340" y="202" text-anchor="middle" dominant-baseline="central">cod · upi · card · emi · net</text>
+    </g>
+
+    <!-- Branch: COD vs Razorpay -->
+    <line x1="240" y1="190" x2="130" y2="240" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="440" y1="190" x2="550" y2="240" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <text class="ts" x="160" y="230">COD</text>
+    <text class="ts" x="490" y="230">online</text>
+
+    <g class="c-gray node" onclick="sendPrompt('How is a cash-on-delivery order handled?')">
+      <rect x="40" y="244" width="180" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="130" y="264" text-anchor="middle" dominant-baseline="central">OrderService.createOrder</text>
+      <text class="ts" x="130" y="280" text-anchor="middle" dominant-baseline="central">status: pending</text>
+      <text class="ts" x="130" y="294" text-anchor="middle" dominant-baseline="central">paymentMethod: cod</text>
+    </g>
+
+    <g class="c-coral node" onclick="sendPrompt('How does RazorpayService.openPayment work?')">
+      <rect x="460" y="244" width="180" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="550" y="264" text-anchor="middle" dominant-baseline="central">RazorpayService</text>
+      <text class="ts" x="550" y="280" text-anchor="middle" dominant-baseline="central">loadRazorpay() lazy script</text>
+      <text class="ts" x="550" y="294" text-anchor="middle" dominant-baseline="central">amount × 100 → paise (INR)</text>
+    </g>
+
+    <line x1="550" y1="300" x2="550" y2="334" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-coral node" onclick="sendPrompt('What happens inside the Razorpay modal?')">
+      <rect x="460" y="338" width="180" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="550" y="358" text-anchor="middle" dominant-baseline="central">Razorpay modal</text>
+      <text class="ts" x="550" y="374" text-anchor="middle" dominant-baseline="central">handler → onSuccess(paymentId)</text>
+      <text class="ts" x="550" y="388" text-anchor="middle" dominant-baseline="central">ondismiss → onCancel()</text>
+    </g>
+
+    <line x1="460" y1="366" x2="280" y2="366" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <text class="ts" x="360" y="356" text-anchor="middle">onSuccess</text>
+
+    <g class="c-teal node" onclick="sendPrompt('How is the order created after successful payment?')">
+      <rect x="100" y="338" width="180" height="56" rx="8" stroke-width="0.5"/>
+      <text class="th" x="190" y="358" text-anchor="middle" dominant-baseline="central">OrderService.createOrder</text>
+      <text class="ts" x="190" y="374" text-anchor="middle" dominant-baseline="central">dual-write to Firestore</text>
+      <text class="ts" x="190" y="388" text-anchor="middle" dominant-baseline="central">razorpayPaymentId stored</text>
+    </g>
+
+    <line x1="190" y1="394" x2="190" y2="428" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="130" y1="300" x2="130" y2="338" stroke="var(--color-border-secondary)" stroke-width="1" marker-end="url(#arr)"/>
+
+    <g class="c-green node">
+      <rect x="100" y="432" width="180" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="190" y="450" text-anchor="middle" dominant-baseline="central">OrderSuccessPage</text>
+      <text class="ts" x="190" y="466" text-anchor="middle" dominant-baseline="central">CartService.clearCart()</text>
+    </g>
+
+    <text class="ts" x="340" y="500" text-anchor="middle">environment.razorpayKey = rzp_test_… — swap to live key for production</text>
+  </svg>
+  </div>
+</div>
+
+<script>
+function show(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="account-page">
+    <aside class="account-sidebar">
+      <ul class="menu-list">
+        <li (click)="activeSection = 'profile'" [class.active]="activeSection === 'profile'">
+          Profile Info
+        </li>
+
+        <li (click)="activeSection = 'address'" [class.active]="activeSection === 'address'">
+          Address
+        </li>
+
+        <li (click)="activeSection = 'orders'" [class.active]="activeSection === 'orders'">
+          Orders
+        </li>
+      </ul>
+    </aside>
+
+    <section class="account-content">
+      @if (activeSection === 'profile') {
+        <div>
+          <div class="user-detail">
+            <h2>User Details</h2>
+
+            @if (user(); as u) {
+              <div class="card">
+                <h3>Profile Info</h3>
+
+                <p><b>Name:</b> {{ u.firstName }} {{ u.lastName }}</p>
+                <p><b>Email:</b> {{ u.email }}</p>
+
+                <p>
+                  <b>Phone:</b>
+                  {{ user()?.phoneNumber?.[0] || 'N/A' }}
+                </p>
+
+                <p><b>Joined:</b> {{ user()?.createdAt?.toDate?.() | date }}</p>
+                <!-- <p><b>Joined:</b> {{ u.createdAt?.toDate() | date }}</p> -->
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ORDERS -->
+      @if (activeSection === 'orders') {
+        <div class="orders">
+          <h2>Orders</h2>
+
+          <div class="card">
+            <p><b>Total Orders:</b> {{ orders().length }}</p>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            @for (order of orders(); track $index) {
+              <tr>
+                <td>{{ order.orderId }}</td>
+                <td>{{ order.createdAt | date }}</td>
+                <td>₹{{ order.total | number: '1.0-0' }}.00</td>
+                <td>{{ order.status || 'Placed' }}</td>
+                <td>
+                  <!-- <button [routerLink]="['/admin/orders/:id']">View</button> -->
+                  <button
+                    [routerLink]="['/admin/orders', order.orderId]"
+                    [queryParams]="{ userId: order.userId }"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            }
+          </table>
+        </div>
+      }
+
+      <!-- ADDRESS -->
+      @if (activeSection === 'address') {
+        <div>
+          <h2>Addresses</h2>
+
+          @if (user()?.addresses?.length) {
+            <div>
+              @for (addr of user()?.addresses ?? []; track $index) {
+                <div class="card">
+                  <p>
+                    <b>{{ addr.fullName }}</b> - {{ addr.phone }}
+                  </p>
+
+                  <p>{{ addr.address }}, {{ addr.city }}, {{ addr.state }} - {{ addr.pinCode }}</p>
+
+                  @if (addr.landmark) {
+                    <p>Landmark: {{ addr.landmark }}</p>
+                  }
+                </div>
+              }
+            </div>
+          } @else {
+            <p>No Address!</p>
+          }
+        </div>
+      }
+    </section>
+  </div>
+}

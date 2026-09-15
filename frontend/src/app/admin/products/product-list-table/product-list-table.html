@@ -1,0 +1,139 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="products">
+    <div class="product-add">
+      <h2>Products</h2>
+
+      <button routerLink="/admin/products/add-product">Add new</button>
+    </div>
+
+    <!-- (keyup)="applyFilter($event)" -->
+    <div class="filter-box">
+      <input
+        id="search"
+        name="search"
+        type="text"
+        autocomplete="off"
+        placeholder="Filter (Ex. Mia)"
+        (input)="updateSearch($any($event.target).value)"
+      />
+    </div>
+
+    <div class="product-table-box">
+      <table class="product-table">
+        <thead class="product-table-head">
+          <tr>
+            <th (click)="toggleSort()">
+              <div class="id-arrow">
+                ID
+                <mat-icon class="material-icons-outlined">
+                  {{ sortDirection() === 'desc' ? 'arrow_upward' : 'arrow_downward' }}
+                </mat-icon>
+              </div>
+            </th>
+            <!-- <th>ID</th> -->
+            <th>Image</th>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Discount Price</th>
+            <th>Brands</th>
+            <th>Color</th>
+            <th>Category</th>
+
+            <th>Description</th>
+            <th>Rating</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (product of paginatedProducts(); track product.id; let i = $index) {
+            <tr class="product-body">
+              <td>
+                {{
+                  sortDirection() === 'asc'
+                    ? pageIndex() * pageSize() + i + 1
+                    : totalItems() - (pageIndex() * pageSize() + i)
+                }}
+              </td>
+              <!-- <td>{{ product.id }}</td> -->
+              <!-- <td>{{ i + 1 }}</td> -->
+              <!-- <td>{{ pageIndex * pageSize + i + 1 }}</td> -->
+              <td>
+                <img [src]="product.image" width="50" height="50" />
+              </td>
+
+              <td>{{ product.title || '' | truncate: 20 }}</td>
+
+              <td>
+                <span [ngClass]="product.stock > 0 ? 'stock-in' : 'stock-out'">
+                  {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+                </span>
+                ({{ product.stock }})
+              </td>
+              <!-- <td>
+              {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+            </td> -->
+
+              <td class="final-price">₹{{ product.price }}</td>
+
+              <td>
+                @if (product.discount && product.discount > 0) {
+                  <span class="discount-badge">-{{ product.discount }}%</span>
+
+                  <span class="discount-price">
+                    ₹{{ getDiscountPrice(product) | number: '1.0-0' }}
+                  </span>
+                } @else {
+                  <span>—</span>
+                }
+              </td>
+
+              <td>{{ product.brand }}</td>
+
+              <td>{{ product.color }}</td>
+
+              <td>{{ product.category }}</td>
+
+              <td>{{ product.description || '' | truncate: 20 }}</td>
+
+              <td>{{ product.rating }}</td>
+
+              <td>
+                <!-- {{ product.createdAt | date: 'dd MMM yyyy, hh:mm a' }} -->
+                {{ product.createdAt ? (product.createdAt | date: 'mediumDate') : '—' }}
+              </td>
+
+              <td class="product-body-btn">
+                <button [routerLink]="['/admin/products/edit', product.id]">
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+                <button (click)="deleteProduct(product.id!)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          }
+
+          @if (filteredProducts().length === 0) {
+            <tr>
+              <td colspan="9">No products found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <mat-paginator
+        [length]="filteredProducts().length"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 15]"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+}

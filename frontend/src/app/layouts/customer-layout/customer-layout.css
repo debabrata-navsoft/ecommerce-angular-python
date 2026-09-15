@@ -1,0 +1,49 @@
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.page-container {
+  flex: 1;
+  max-width: 100%;
+  margin: 0 5rem;
+  min-height: 100vh;
+  padding-top: 9.5rem;
+}
+
+/* .app-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-container {
+  flex: 1;
+  max-width: 100%;
+  margin: 0 5rem;
+  min-height: 100vh;
+} */
+
+.breadcrumb {
+  background: white;
+  max-width: 100%;
+  margin: 0 5rem;
+  padding: 0 4px;
+}
+
+.page-container.auth-page {
+  margin: 0;
+  max-width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+}

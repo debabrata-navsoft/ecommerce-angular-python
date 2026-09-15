@@ -1,0 +1,85 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="today-deals-page">
+    <h1 class="page-title">Trending Products</h1>
+
+    @if (products().length === 0) {
+      <div class="empty-state">
+        <p>No deals available right now. Check back soon!</p>
+      </div>
+    }
+
+    <div class="product-list">
+      @for (product of products(); track product.id) {
+        <div
+          class="card"
+          [ngClass]="{ 'low-stock': product.stock > 0 && product.stock < 3 }"
+          appHighlight
+          (click)="viewDetails(product.id!)"
+        >
+          @if (showWishlistIcon()) {
+            <div class="fav-icon">
+              <button (click)="addToWishlist(product); $event.stopPropagation()">
+                <mat-icon
+                  class="material-icons-outlined"
+                  [ngClass]="{ 'active-wish': isWishlisted(product.id!) }"
+                >
+                  {{ isWishlisted(product.id!) ? 'favorite' : 'favorite_border' }}
+                </mat-icon>
+              </button>
+            </div>
+          }
+
+          <div class="img-container">
+            <img [src]="product.image" [alt]="product.title" class="product-img" />
+          </div>
+
+          <h3>{{ product.title || '' | truncate: 35 }}</h3>
+
+          <div class="rating">
+            @for (star of getRating().getStars(product.rating || 0); track $index) {
+              <span [ngClass]="star">&#9733;</span>
+            }
+            <span class="rating-number">({{ product.rating ?? 0 }})</span>
+          </div>
+
+          <p class="category">
+            <strong>Category:</strong> {{ product.subCategory | categoryLabel }}
+          </p>
+
+          <p class="brand"><strong>Brand:</strong> {{ product.brand }}</p>
+
+          <div class="price-box">
+            <div>
+              @if (product.discount && product.discount > 0) {
+                <span class="discount"> -{{ product.discount }}% </span>
+              }
+              <span class="final-price">
+                ₹{{ getDiscountPrice(product) | number: '1.0-0' }}.00
+              </span>
+            </div>
+            <p class="original-price-mrp">
+              M.R.P.:
+              <span class="original-price">₹{{ product.price | number: '1.0-0' }}.00</span>
+            </p>
+          </div>
+
+          <p>{{ product.description || '' | truncate: 80 }}</p>
+
+          @if (product.stock === 0 || product.stock < 3) {
+            <div class="status-section">
+              <div class="stock-message">
+                @if (product.stock === 0) {
+                  <span class="out-of-stock">Out of Stock</span>
+                } @else {
+                  <span class="low-stock-text">⚠️ Only few left</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

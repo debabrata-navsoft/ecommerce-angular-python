@@ -1,0 +1,102 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="orders">
+    <h2>All Orders</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th (click)="toggleSort()">
+              <div class="id-arrow">
+                ID
+                <mat-icon class="material-icons-outlined">
+                  {{ sortDirection() === 'desc' ? 'arrow_upward' : 'arrow_downward' }}
+                </mat-icon>
+              </div>
+            </th>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Action</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (order of paginatedOrders(); track order.orderId; let i = $index) {
+            <tr>
+              <td>
+                {{
+                  sortDirection() === 'asc'
+                    ? pageIndex() * pageSize() + i + 1
+                    : totalItems() - (pageIndex() * pageSize() + i)
+                }}
+              </td>
+              <!-- <td>{{ i + 1 }}</td> -->
+              <td>{{ order.orderId }}</td>
+              <td>{{ order.userEmail }}</td>
+              <td>₹{{ order.total | number: '1.0-0' }}.00</td>
+
+              <td>{{ order.createdAt | date: 'medium' }}</td>
+
+              <td>
+                <!-- <button [routerLink]="['/admin/orders/:id']">View</button> -->
+                <button
+                  [routerLink]="['/admin/orders', order.orderId]"
+                  [queryParams]="{ userId: order.userId }"
+                >
+                  View
+                </button>
+              </td>
+
+              <!-- <td>
+              <select (change)="changeStatus(order, $event)">
+                <option value="pending" [selected]="order.status === 'pending'">Pending</option>
+                <option value="confirmed" [selected]="order.status === 'confirmed'">
+                  Confirmed
+                </option>
+                <option value="shipped" [selected]="order.status === 'shipped'">Shipped</option>
+                <option value="delivered" [selected]="order.status === 'delivered'">
+                  Delivered
+                </option>
+              </select>
+            </td> -->
+
+              <td class="status-section">
+                <select (change)="changeStatus(order, $event)">
+                  <option value="pending" [selected]="order.status === 'pending'">Pending</option>
+
+                  <option value="shipped" [selected]="order.status === 'shipped'">Shipped</option>
+                  <option value="delivered" [selected]="order.status === 'delivered'">
+                    Delivered
+                  </option>
+                  <option value="cancelled" [selected]="order.status === 'cancelled'">
+                    Cancelled
+                  </option>
+                </select>
+
+                <span class="status {{ order.status | lowercase }}">
+                  {{ order.status }}
+                </span>
+              </td>
+              <!-- <td class="status {{ order.status | lowercase }}">
+              {{ order.status }}
+            </td> -->
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+}

@@ -1,0 +1,40 @@
+.admin-header {
+  /* height: 60px; */
+  background: white;
+  /* color: white; */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 4rem;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 12px 0;
+}
+
+.admin-actions span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.admin-actions button {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 10px;
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-actions button:hover {
+  background: #e03131;
+}

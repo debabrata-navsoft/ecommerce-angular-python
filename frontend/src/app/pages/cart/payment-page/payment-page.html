@@ -1,0 +1,183 @@
+@if (isLoading()) {
+  <app-loader />
+} @else {
+  <div class="payment-page">
+    <div class="payment-left">
+      <h2>Choose Payment Method</h2>
+
+      <div class="payment-card" (click)="select('cod')" [class.active]="selectedMethod() === 'cod'">
+        <div class="radio" [class.checked]="selectedMethod() === 'cod'"></div>
+        <div class="info">
+          <h3>Cash on Delivery</h3>
+          <p>Pay when your order is delivered</p>
+        </div>
+      </div>
+
+      <div class="payment-card" (click)="select('upi')" [class.active]="selectedMethod() === 'upi'">
+        <div class="radio" [class.checked]="selectedMethod() === 'upi'"></div>
+        <div class="payment-card-img">
+          <div class="info">
+            <h3>UPI Payment</h3>
+            <p>Pay using Google Pay / PhonePe / Paytm / BHIM</p>
+          </div>
+
+          <div class="payment-icons">
+            <img src="payments/gpay.png" alt="Google Pay" />
+            <img src="payments/phonepe.png" alt="PhonePe" />
+            <img src="payments/paytm.png" alt="Paytm" />
+            <img src="payments/bhim.png" alt="BHIM" />
+          </div>
+        </div>
+      </div>
+
+      <!-- @if (selectedMethod() === 'upi') {
+      <div class="sub-box">
+        <input placeholder="Enter UPI ID (example@upi)" [(ngModel)]="form.upiId" />
+      </div>
+    } -->
+
+      <div
+        class="payment-card"
+        (click)="select('card')"
+        [class.active]="selectedMethod() === 'card'"
+      >
+        <div class="radio" [class.checked]="selectedMethod() === 'card'"></div>
+
+        <div class="payment-card-img">
+          <div class="info">
+            <h3>Credit / Debit Card</h3>
+            <p>Visa, Mastercard, Rupay</p>
+          </div>
+
+          <div class="payment-icons">
+            <img src="payments/visa.png" alt="Visa" />
+            <img src="payments/mastercard.png" alt="Mastercard" />
+            <img src="payments/rupay.png" alt="RuPay" />
+            <img src="payments/amex.png" alt="Amex" />
+          </div>
+        </div>
+      </div>
+
+      <!-- @if (selectedMethod() === 'card') {
+      <div class="sub-box">
+        <input placeholder="Card Number" [(ngModel)]="form.cardNumber" maxlength="16" />
+        <div class="card-row">
+          <input placeholder="MM/YY" [(ngModel)]="form.expiry" maxlength="5" />
+          <input placeholder="CVV" [(ngModel)]="form.cvv" maxlength="3" type="password" />
+        </div>
+      </div>
+    } -->
+
+      <div class="payment-card" (click)="select('emi')" [class.active]="selectedMethod() === 'emi'">
+        <div class="radio" [class.checked]="selectedMethod() === 'emi'"></div>
+
+        <div class="payment-card-img">
+          <div class="info">
+            <h3>EMI Option</h3>
+            <p>Pay in easy monthly installments</p>
+          </div>
+
+          <div class="payment-icons">
+            <img src="payments/bajajfinserv.png" alt="Bajaj Finserv" />
+            <img src="payments/hdfc.png" alt="HDFC" />
+            <img src="payments/icici.png" alt="ICICI" />
+            <img src="payments/sbi.png" alt="SBI" />
+
+            <span class="emi-badge">No Cost EMI</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="payment-card"
+        (click)="select('netbanking')"
+        [class.active]="selectedMethod() === 'netbanking'"
+      >
+        <div class="radio" [class.checked]="selectedMethod() === 'netbanking'"></div>
+        <div class="payment-card-img">
+          <div class="info">
+            <h3>Net Banking</h3>
+            <p>Pay directly from bank account</p>
+          </div>
+
+          <div class="payment-icons">
+            <img src="payments/sbi.png" alt="SBI" />
+            <img src="payments/hdfc.png" alt="HDFC" />
+            <img src="payments/icici.png" alt="ICICI" />
+            <img src="payments/axis.png" alt="AXIS" />
+          </div>
+        </div>
+      </div>
+
+      <div class="razorpay-badge">
+        <span>Secured by</span>
+        <img src="https://razorpay.com/assets/razorpay-glyph.svg" alt="Razorpay" />
+        <strong>Razorpay</strong>
+      </div>
+
+      <button class="pay-btn" (click)="payNow()">
+        @if (selectedMethod() === 'cod') {
+          Place Order — ₹{{ orderData()?.total | number: '1.0-0' }}.00
+        } @else {
+          Pay ₹{{ orderData()?.total | number: '1.0-0' }}.00
+        }
+      </button>
+
+      <!-- <button class="pay-btn" (click)="payNow()">
+      Pay ₹{{ orderData()?.total | number: '1.0-0' }}.00
+    </button> -->
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div class="payment-right">
+      <h2>Order Summary</h2>
+
+      @if (orderData()) {
+        <div class="items-list">
+          @for (item of orderData().items; track item.productId) {
+            <div class="order-item">
+              <img [src]="item.image" [alt]="item.title" class="item-img" />
+              <div class="item-info">
+                <p class="item-title">{{ item.title | truncate: 20 }}</p>
+                <small>Qty: {{ item.quantity }}</small>
+              </div>
+              <span class="item-price">
+                ₹{{ item.price * (1 - item.discount / 100) * item.quantity | number: '1.0-0' }}.00
+              </span>
+            </div>
+          }
+        </div>
+
+        <hr />
+
+        <div class="summary-rows">
+          <div class="row">
+            <span>Subtotal</span>
+            <span>₹{{ orderData().subTotal | number: '1.0-0' }}.00</span>
+          </div>
+          <div class="row">
+            <span>Shipping</span>
+            @if (orderData().shippingMethod === 'express') {
+              <span>₹90.00</span>
+            } @else {
+              <span class="free-tag">Free</span>
+            }
+          </div>
+          <div class="row">
+            <span>GST (18%)</span>
+            <span>₹{{ orderData().gst | number: '1.0-0' }}.00</span>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="total">
+          <span>Total</span>
+          <span>₹{{ orderData().total | number: '1.0-0' }}.00</span>
+        </div>
+      } @else {
+        <p class="loading-text">Loading order details...</p>
+      }
+    </div>
+  </div>
+}

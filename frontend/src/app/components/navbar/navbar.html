@@ -1,0 +1,105 @@
+<nav class="navbar">
+  <div class="category-btn" (click)="toggleSidebar()">
+    <mat-icon class="material-icons-outlined">menu</mat-icon> SHOP BY CATEGORIES
+  </div>
+
+  @if (isSidebarOpen()) {
+    <div class="overlay" (click)="closeSidebar()"></div>
+  }
+
+  <div class="sidebar" [class.open]="isSidebarOpen()">
+    <div class="sidebar-header">
+      @if (!isLoggedIn) {
+        <a
+          [routerLink]="isLoggedIn ? '/' : '/login'"
+          routerLinkActive="active"
+          class="btn secondary"
+          ><mat-icon class="material-icons-outlined">person</mat-icon>Hello, sign In</a
+        >
+      } @else {
+        <div class="avatar-container">
+          <div class="name-box">
+            <img (click)="toggleMenu($event)" src="/avatar.png" alt="" class="avatar-img" />
+
+            <span>Hello, {{ user()?.firstName }} {{ user()?.lastName }}</span>
+          </div>
+
+          @if (isMenuOpen()) {
+            <div class="overlay" (click)="closeMenu()"></div>
+            <div class="dropdown-login">
+              <button (click)="logout()">Logout</button>
+            </div>
+          }
+        </div>
+      }
+
+      <button (click)="closeSidebar()">
+        <mat-icon class="material-icons-outlined">close</mat-icon>
+      </button>
+    </div>
+
+    <ul class="sidebar-item">
+      @for (menus of menu(); track menus.title) {
+        <h2>{{ menus.title }}</h2>
+
+        @for (item of menus.items; track item.name) {
+          <li class="menu-item" (click)="onMenuItemClick(item)">
+            {{ item.name }}
+            @if (item.hasArrow) {
+              <mat-icon class="material-icons-outlined arrow">chevron_right</mat-icon>
+            }
+          </li>
+        }
+
+        <!-- @for (item of menus.items; track item.name) {
+          <li
+            class="menu-item"
+            [routerLink]="['/products']"
+            [queryParams]="{ main: item.category, category: 'all' }"
+          >
+            {{ item.name }}
+
+            @if (item.hasArrow) {
+              <mat-icon class="material-icons-outlined arrow">chevron_right</mat-icon>
+            }
+          </li>
+        } -->
+      }
+    </ul>
+  </div>
+
+  <div class="nav-wrapper" (mouseleave)="closeDropdown()">
+    <ul class="nav-item">
+      @for (cat of categories(); track cat.name) {
+        <li
+          class="nav-link"
+          (mouseenter)="openDropdown(cat, $event)"
+          (click)="goToMainCategory(cat)"
+        >
+          {{ cat.name }}
+        </li>
+      }
+    </ul>
+
+    <!-- DROPDOWN -->
+    @if (isDropdownOpen() && selectedCategory()) {
+      <div class="dropdown" [ngStyle]="{ 'left.px': dropdownLeft(), 'top.px': dropdownTop() }">
+        <h4>{{ selectedCategory()?.name }}</h4>
+
+        <ul>
+          @for (sub of selectedCategory()?.subcategories; track sub.label) {
+            <li (click)="goToSubCategory(sub)">
+              {{ sub.label }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
+  <div class="delivery">
+    <a routerLink="/shipping-info">🚀 Free International Delivery</a>
+  </div>
+
+  <!-- <div class="delivery">🚀 Free International Delivery</div> -->
+</nav>

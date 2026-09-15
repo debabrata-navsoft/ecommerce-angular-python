@@ -1,0 +1,74 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h1>Welcome Back</h1>
+    <p>Login to access to your account</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <div class="input-box">
+        <mat-icon class="material-icons-outlined">email</mat-icon>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="Enter your email"
+          [formControl]="form.controls.email"
+        />
+      </div>
+
+      <div class="error">
+        @if (email.errors?.['required'] && email.touched) {
+          <p class="error-line">Email is required.</p>
+        }
+
+        @if (email.errors?.['email'] && email.touched) {
+          <p class="error-line">Enter a valid email.</p>
+        }
+
+        @if (email.errors?.['emailNotRegistered'] && email.touched) {
+          <p class="error-line">Email is not registered</p>
+        }
+      </div>
+
+      <label for="password">Password</label>
+      <div class="input-box">
+        <mat-icon class="material-icons-outlined">lock</mat-icon>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+      </div>
+
+      <div class="error">
+        @if (password.errors?.['required'] && password.touched) {
+          <p class="error-line">Password required</p>
+        }
+
+        @if (password.errors?.['minlength'] && password.touched) {
+          <p class="error-line">Minimum 6 characters</p>
+        }
+        @if (password.errors?.['invalidPassword'] && password.touched) {
+          <p class="error-line">Invalid password</p>
+        }
+      </div>
+
+      <button type="submit" class="login-btn">
+        @if (isLoading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        } @else {
+          Login
+        }
+      </button>
+    </form>
+
+    <div class="signup-link">
+      Don't have an account?
+      <a routerLink="/signup">Sign Up</a>
+    </div>
+  </div>
+</div>
