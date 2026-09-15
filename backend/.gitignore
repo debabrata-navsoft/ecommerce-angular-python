@@ -1,4 +1,9 @@
-# Environment
+# Virtual environments
+.venv/
+venv/
+.venv-django/
+
+# Environment variables
 .env
 .env.local
 
@@ -8,10 +13,6 @@ __pycache__/
 
 # Database
 *.sqlite3
-
-# Virtual environment
-.venv/
-venv/
 
 # Logs
 *.log
